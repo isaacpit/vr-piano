@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - HandController
+  - PianoKeys
+  - HandPlayingKey
+  - PianoKeyPlaying
   - 
   - 
   - 
