@@ -48,4 +48,8 @@ public class DistanceReader : MonoBehaviour
         return (transform.position - obj.transform.position).sqrMagnitude;
     }
 
+    private void Update()
+    {
+        //if(GetDistanceRatio() > distanceLimit)
+    }
 }

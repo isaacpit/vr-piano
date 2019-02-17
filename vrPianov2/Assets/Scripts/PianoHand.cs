@@ -9,11 +9,11 @@ public class PianoHand : MonoBehaviour
     private SteamVR_Behaviour_Pose pose;
 
     [SerializeField]
-    private float vibrationDuration = 1f;
+    private float vibrationDuration = .15f;
     [SerializeField]
     private float vibrationFrequency = 160f;
     [SerializeField]
-    private float vibrationStrength = .5f;
+    private float vibrationStrength = .2f;
 
 
     public bool readyToPlay = true;
@@ -33,7 +33,7 @@ public class PianoHand : MonoBehaviour
     {
         HapticVibration();
         if (readyToPlay)
-        {            
+        {               
             collision.gameObject.GetComponentInChildren<PianoKeyAudio>().CheckForSound(this);
             collision.gameObject.layer = LayerMask.NameToLayer("PianoKeyPlaying");
             gameObject.layer = LayerMask.NameToLayer("HandPlayingKey");
@@ -53,15 +53,15 @@ public class PianoHand : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (readyToPlay)
-        {
-            collision.gameObject.GetComponentInChildren<PianoKeyAudio>().CheckForSound(this);
-            collision.gameObject.layer = LayerMask.NameToLayer("PianoKeyPlaying");
-            gameObject.layer = LayerMask.NameToLayer("HandPlayingKey");
-        }
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (readyToPlay)
+    //    {
+    //        collision.gameObject.GetComponentInChildren<PianoKeyAudio>().CheckForSound(this);
+    //        collision.gameObject.layer = LayerMask.NameToLayer("PianoKeyPlaying");
+    //        gameObject.layer = LayerMask.NameToLayer("HandPlayingKey");
+    //    }
+    //}
 
 
 

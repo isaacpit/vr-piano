@@ -23,8 +23,8 @@ public class PianoKeyAudio : MonoBehaviour
     {
         if (soundStarted && !source.isPlaying)
         {
-            //currentHand.ResetHand(this);
             soundStarted = false;
+            physicalKey.layer = LayerMask.NameToLayer("PianoKeys");
         }
     }
 
@@ -32,21 +32,15 @@ public class PianoKeyAudio : MonoBehaviour
     {
         if (hand.readyToPlay)
         {
-            //var dist = reader.GetDistanceRatioY();
-            //Debug.Log(dist);
-            if (!soundStarted)
+            hand.readyToPlay = false;
+            if (!source.isPlaying)
+                source.Play();
+            else
             {
-                //currentHand = hand;
-                //hand.readyToPlay = false;                
-                if (!source.isPlaying)
-                    source.Play();
-                else
-                {
-                    source.Stop();
-                    source.Play();
-                }
-                soundStarted = true;
+                source.Stop();
+                source.Play();
             }
+            soundStarted = true;
         }
     }
 }
