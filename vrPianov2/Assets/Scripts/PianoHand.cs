@@ -21,47 +21,13 @@ public class PianoHand : MonoBehaviour
     private void Awake()
     {
         pose = GetComponentInParent<SteamVR_Behaviour_Pose>();        
-    }
+    }   
 
-    public void ResetHand(PianoKeyAudio keyAudio)
-    {
-        readyToPlay = true;
-        keyAudio.physicalKey.layer = LayerMask.NameToLayer("PianoKeys");
-        gameObject.layer = LayerMask.NameToLayer("HandController");
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        HapticVibration();
-        if (readyToPlay)
-        {               
-            collision.gameObject.GetComponentInChildren<PianoKeyAudio>().CheckForSound(this);
-            collision.gameObject.layer = LayerMask.NameToLayer("PianoKeyPlaying");
-            gameObject.layer = LayerMask.NameToLayer("HandPlayingKey");
-        }
-    }
-
-    private void HapticVibration()
+    public void HapticVibration()
     {
         haptic.Execute(0f, vibrationDuration, vibrationFrequency, vibrationStrength, pose.inputSource);
     }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (!readyToPlay)
-        {
-            ResetHand(collision.gameObject.GetComponentInChildren<PianoKeyAudio>());
-        }
-    }
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    if (readyToPlay)
-    //    {
-    //        collision.gameObject.GetComponentInChildren<PianoKeyAudio>().CheckForSound(this);
-    //        collision.gameObject.layer = LayerMask.NameToLayer("PianoKeyPlaying");
-    //        gameObject.layer = LayerMask.NameToLayer("HandPlayingKey");
-    //    }
-    //}
+   
 
 
 
