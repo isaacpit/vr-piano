@@ -31,19 +31,30 @@ public class PianoKeyAudio : MonoBehaviour
         //    source.Stop();
         //}
         if (collision.gameObject.layer == LayerMask.NameToLayer("HandController") && readyToPlay)
-        {            
-            readyToPlay = false;
-            collision.gameObject.GetComponent<PianoHand>().HapticVibration();
-            source.Play();
-            StartCoroutine(WaitToPlayAgain());
+        {               
+            var hand = collision.gameObject.GetComponent<PianoHand>();
+            if (hand.readyToPlay)
+            {
+                readyToPlay = false;
+                hand.readyToPlay = false;
+                hand.HapticVibration();
+                if (hand.currentSource != null && hand.currentSource != source)
+                {
+                    hand.currentSource.Stop();
+                }
+                hand.currentSource = source;
+                source.Play();
+                StartCoroutine(WaitToPlayAgain(hand));
+            }
         }
         
     }    
     
-    IEnumerator WaitToPlayAgain()
+    IEnumerator WaitToPlayAgain(PianoHand hand)
     {
         yield return new WaitForSeconds(minimumWaitToPlay);
         readyToPlay = true;
+        hand.readyToPlay = true;
     }
 
         //private void Update()

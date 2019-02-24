@@ -15,8 +15,10 @@ public class PianoHand : MonoBehaviour
     [SerializeField]
     private float vibrationStrength = .2f;
 
+    public AudioSource currentSource;
 
-    public bool readyToPlay = true;
+
+    public bool readyToPlay = true;    
 
     private void Awake()
     {
