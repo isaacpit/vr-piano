@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Types;
 
 public class InputManager : SimpleSingleton<InputManager>
 {
@@ -55,8 +56,9 @@ public class InputManager : SimpleSingleton<InputManager>
             {
                 if (m_spawners[m_spawnerIndex] != null)
                 {
-                    Chord chord = (Chord)Random.Range(0, (int)Chord.NUM_CHORDS);
-                    m_spawners[m_spawnerIndex].spawnEnemy(chord);
+                    ChordType chord = (ChordType)Random.Range(0, (int)ChordType.NUM_CHORDS);
+                    MusicalNote rootNote = (MusicalNote)Random.Range(0, System.Enum.GetValues(typeof(MusicalNote)).Length);
+                    m_spawners[m_spawnerIndex].SpawnEnemy(rootNote, chord);
                 } 
             }
         }
@@ -65,7 +67,7 @@ public class InputManager : SimpleSingleton<InputManager>
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 Debug.Log("Triggered 1 ");
-                if (m_currentEnemy.chordType == Chord.Major)
+                if (m_currentEnemy.chord.chordType == ChordType.Major)
                 {
                     m_currentEnemy.gameObject.SetActive(false);
                 }
@@ -73,7 +75,7 @@ public class InputManager : SimpleSingleton<InputManager>
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Debug.Log("Triggered 2 ");
-                if (m_currentEnemy.chordType == Chord.Minor)
+                if (m_currentEnemy.chord.chordType == ChordType.Minor)
                 {
                     m_currentEnemy.gameObject.SetActive(false);
                 }
@@ -81,7 +83,7 @@ public class InputManager : SimpleSingleton<InputManager>
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Debug.Log("Triggered 3 ");
-                if (m_currentEnemy.chordType == Chord.Diminished)
+                if (m_currentEnemy.chord.chordType == ChordType.Diminished)
                 {
                     m_currentEnemy.gameObject.SetActive(false);
                 }

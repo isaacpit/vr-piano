@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Types;
 
 public class Piano : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class Piano : MonoBehaviour
         for (int i = 0; i < keys.Length; ++i)
         {
             Debug.Log(keys[i]);
-            keys[i].source.clip = instrument.GetPianoNoteAudio((Instrument.PianoNote)i);
+            keys[i].source.clip = instrument.GetPianoNoteAudio((MusicalNote)i);
             Debug.Log(keys[i].source.clip);
         }
     }

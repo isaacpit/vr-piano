@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Types;
 
 [CreateAssetMenu(menuName = "Create Instrument",fileName ="NewInstrument", order = 0)]
 public class Instrument : ScriptableObject
@@ -14,50 +15,48 @@ public class Instrument : ScriptableObject
     public AudioClip Gsharp;
     public AudioClip A;
     public AudioClip Bb;
-    public AudioClip B;
+    public AudioClip B;    
 
-    public enum PianoNote { C, Csharp, D, Eb, E, F, Fsharp, G, Gsharp, A, Bb, B};
-
-    public AudioClip GetPianoNoteAudio(PianoNote note)
+    public AudioClip GetPianoNoteAudio(MusicalNote note)
     {
         AudioClip clip;
         switch (note)
         {
-            case PianoNote.C:
+            case MusicalNote.C:
             default:
                 clip = C;
                 break;
-            case PianoNote.Csharp:
+            case MusicalNote.Csharp:
                 clip = Csharp;
                 break;
-            case PianoNote.D:
+            case MusicalNote.D:
                 clip = D;
                 break;
-            case PianoNote.Eb:
+            case MusicalNote.Dsharp:
                 clip = Eb;
                 break;
-            case PianoNote.E:
+            case MusicalNote.E:
                 clip = E;
                 break;
-            case PianoNote.F:
+            case MusicalNote.F:
                 clip = F;
                 break;
-            case PianoNote.Fsharp:
+            case MusicalNote.Fsharp:
                 clip = Fsharp;
                 break;
-            case PianoNote.G:
+            case MusicalNote.G:
                 clip = G;
                 break;
-            case PianoNote.Gsharp:
+            case MusicalNote.Gsharp:
                 clip = Gsharp;
                 break;
-            case PianoNote.A:
+            case MusicalNote.A:
                 clip = A;
                 break;
-            case PianoNote.Bb:
+            case MusicalNote.Asharp:
                 clip = Bb;
                 break;
-            case PianoNote.B:
+            case MusicalNote.B:
                 clip = B;
                 break;
         }

@@ -369,6 +369,7 @@ MonoBehaviour:
   - {fileID: 1731626020}
   - {fileID: 1779588050}
   m_spawnerIndex: 0
+  m_currentEnemy: {fileID: 0}
 --- !u!114 &597870109 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
@@ -633,7 +634,9 @@ MonoBehaviour:
   m_endPos: {x: 0, y: 5, z: -5}
   m_stepSize: 0.1
   objective: {fileID: 177108333}
-  chordType: 0
+  chord:
+    RootNote: 0
+    chordType: 0
   m_material: {fileID: 0}
   m_materials:
   - {fileID: 2100000, guid: c025ccddd4d1044a7b7b872b43d98d62, type: 2}
@@ -885,6 +888,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CenterSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemy
+      value: 
+      objectReference: {fileID: 1437087480}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemyPoolCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3793456174127865290, guid: 6b254fc0856544ddd9eb36887dc39afa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -939,16 +952,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemy
-      value: 
-      objectReference: {fileID: 1437087480}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemyPoolCount
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b254fc0856544ddd9eb36887dc39afa, type: 3}
@@ -1061,6 +1064,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemy
+      value: 
+      objectReference: {fileID: 1437087480}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemyPoolCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3793456174127865290, guid: 6b254fc0856544ddd9eb36887dc39afa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1115,16 +1128,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemy
-      value: 
-      objectReference: {fileID: 1437087480}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemyPoolCount
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b254fc0856544ddd9eb36887dc39afa, type: 3}
@@ -1231,6 +1234,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemy
+      value: 
+      objectReference: {fileID: 1437087480}
+    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
+        type: 3}
+      propertyPath: m_enemyPoolCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3793456174127865290, guid: 6b254fc0856544ddd9eb36887dc39afa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1285,16 +1298,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemy
-      value: 
-      objectReference: {fileID: 1437087480}
-    - target: {fileID: 3793456174127865293, guid: 6b254fc0856544ddd9eb36887dc39afa,
-        type: 3}
-      propertyPath: m_enemyPoolCount
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b254fc0856544ddd9eb36887dc39afa, type: 3}

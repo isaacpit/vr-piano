@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Types;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -66,13 +67,13 @@ public class Spawner : MonoBehaviour
     }
 
 
-    public GameObject spawnEnemy(Chord chord)
+    public GameObject SpawnEnemy(MusicalNote rootNote, ChordType chordType)
     {
         GameObject obj = null;
         if (m_enemies.Count > 0)
         {
             obj = m_enemies.Dequeue();
-            obj.GetComponent<Enemy>().setChordType(chord);
+            obj.GetComponent<Enemy>().SetChord(rootNote, chordType);
             obj.SetActive(true);
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
         }

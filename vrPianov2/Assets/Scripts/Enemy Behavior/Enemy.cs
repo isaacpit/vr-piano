@@ -1,11 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Types;
 using UnityEngine;
-
-public enum Chord
-{
-    Major, Minor, Diminished, NUM_CHORDS
-}
 
 public class Enemy : MonoBehaviour
 {
@@ -19,7 +14,8 @@ public class Enemy : MonoBehaviour
 
     [Space]
     [Header("Chord Info")]
-    public Chord chordType = Chord.Major;
+    public Chord chord;
+    //public ChordType chordType = ChordType.Major;
     public Material m_material;
     public List<Material> m_materials;
 
@@ -50,7 +46,7 @@ public class Enemy : MonoBehaviour
     {
         //InputManager.Instance.currentEnemy = this;
         transform.position = m_startPos;
-        changeMaterial();
+        ChangeMaterial();
 
         // add this enemy to m_liveEnemies queue
         InputManager.Instance.addLiveEnemy(this);
@@ -58,7 +54,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnDisable()
-    { 
+    {
         // place back into spawner queue
         m_spawner.m_enemies.Enqueue(this.gameObject);
 
@@ -70,18 +66,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void changeMaterial()
+    private void ChangeMaterial()
     {
-        Debug.Log("chordType: " + chordType);
+        Debug.Log("chordType: " + chord.chordType);
 
-        m_material = m_materials[(int)chordType];
+        m_material = m_materials[(int)chord.chordType];
         Debug.Log("m_material: " + m_material.name);
         GetComponent<MeshRenderer>().material = m_material;
     }
 
-    public void setChordType(Chord c)
+    public void SetChord(MusicalNote note, ChordType chordType)
     {
-        chordType = c;
+        chord = new Chord(note, chordType);
     }
 
     // Update is called once per frame
