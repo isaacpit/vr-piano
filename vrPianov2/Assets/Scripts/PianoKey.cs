@@ -8,7 +8,6 @@ public class PianoKey : MonoBehaviour
     public AudioSource source;
 
     public MusicalNote note;
-    private DistanceReader reader;
     [SerializeField]
     private float minimumWaitToPlay = .2f;
     public bool readyToPlay = true;
@@ -16,6 +15,11 @@ public class PianoKey : MonoBehaviour
     public bool soundStarted = false;
 
     private Light keyLight;
+
+    [SerializeField]
+    private Material hintMat;
+
+    private Material originalMaterial;
 
     [SerializeField]
     private Color hintLightColor;
@@ -32,11 +36,11 @@ public class PianoKey : MonoBehaviour
     private void Awake()
     {
         source = GetComponent<AudioSource>();
-        reader = GetComponent<DistanceReader>();
         readyToPlay = true;
         keyLight = GetComponentInChildren<Light>();
         startingIntensity = keyLight.intensity;
         startingLightColor = keyLight.color;
+        originalMaterial = GetComponent<Renderer>().material;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -97,8 +101,7 @@ public class PianoKey : MonoBehaviour
 
     public void EnableLightHint()
     {
-        keyLight.color = hintLightColor;
-        keyLight.intensity *= 1.25f;
+        GetComponent<Renderer>().material = hintMat;
     }
 
     public void EnableLightTracking()
@@ -110,6 +113,8 @@ public class PianoKey : MonoBehaviour
     {
         keyLight.color = startingLightColor;
         keyLight.intensity = startingIntensity;
+        GetComponent<Renderer>().material = originalMaterial;
+
     }
 
     IEnumerator ChangeLightIntensityOnTouch()

@@ -80,8 +80,6 @@ public class Spawner : MonoBehaviour
             enemy.chord = Chord.GetRandomChord();
             enemy.objective = targetObjective;
             enemy.gameObject.SetActive(true);
-
-            REMOVE_NOTE_MONITOR.UpdateNoteMonitor(enemy);
                         
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
 

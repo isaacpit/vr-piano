@@ -106,9 +106,9 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(newDir);
     }
 
-    private void PoolDestroy(bool isDamage)
+    public void PoolDestroy(bool isDamageToPlayer)
     {
-        if (isDamage)
+        if (isDamageToPlayer)
         {
             Debug.Log("Player Hit");
         }

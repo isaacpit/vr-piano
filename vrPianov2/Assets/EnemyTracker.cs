@@ -10,6 +10,7 @@ public class EnemyTracker : MonoBehaviour
     public Enemy currentTrackingEnemy;
 
     public TrackingMonitor trackingMonitor;
+    public NoteMonitor noteMonitor;
 
     [SerializeField]
     private Instrument trackingSounds;
@@ -42,11 +43,11 @@ public class EnemyTracker : MonoBehaviour
     public void TrackEnemy(Enemy e)
     {
         StopTracking();
-        currentTrackingEnemy = e;
-        UpdateTrackingMonitorText();
+        currentTrackingEnemy = e;        
+        UpdateMonitors();
         PlayTrackingSound();
         TurnOnTrackingAndHintLights();
-        
+
     }
 
     private void TurnOnTrackingAndHintLights()
@@ -83,16 +84,17 @@ public class EnemyTracker : MonoBehaviour
         }
     }
 
-    private void UpdateTrackingMonitorText()
+    private void UpdateMonitors()
     {
         trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
+        noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
     }
 
     public void CheckNoteToEnemy(MusicalNote note)
     {
         if (currentTrackingEnemy && currentTrackingEnemy.CheckNoteToChord(note))
         {
-            //update note monitor
+            noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
             Debug.Log($"Note hit: {note} ");
         }
         else
