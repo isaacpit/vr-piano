@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public Vector3 m_startPos;
     public Vector3 m_endPos;
     public float m_stepSize;
+    public float m_rotateSpeed;
     public GameObject objective;
     
     [Space]
@@ -90,11 +91,19 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, m_stepSize * Time.deltaTime);
+        float step = m_stepSize * Time.deltaTime;
+        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
 
         p[1] += Mathf.Sin(p[2]) / 100;
         p[0] += Mathf.Cos(p[2]) / 100;
         transform.position = p;
+
+
+        // rotation towards objective
+        float rotStep = m_rotateSpeed * Time.deltaTime;
+        Vector3 targetDir = (m_endPos - transform.position).normalized;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotStep, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDir);
     }
 
     private void PoolDestroy(bool isDamage)

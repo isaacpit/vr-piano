@@ -10,14 +10,17 @@ public class Spawner : MonoBehaviour
     public Queue<GameObject> m_enemies;
     public int m_enemyPoolCount;
     public float randomDistanceRange = 0.1f;
+    public GameObject enemyObjective;
 
 
     private Random rnd;
     private Vector3 spawnPosition;
 
+    public NoteMonitor REMOVE_NOTE_MONITOR;
+
     private void Awake()
     {
-
+   
     }
 
     void Start()
@@ -47,6 +50,8 @@ public class Spawner : MonoBehaviour
             Enemy enemyRef = obj.GetComponent<Enemy>();
             enemyRef.m_startPos = v;
             enemyRef.m_spawner = this;
+            enemyRef.objective = enemyObjective;
+            //enemyRef.m_endPos = enemyObjective.transform.position;
             m_enemies.Enqueue(obj);
             obj.SetActive(false);
 
@@ -74,8 +79,12 @@ public class Spawner : MonoBehaviour
             Enemy enemy = m_enemies.Dequeue().GetComponent<Enemy>();
             enemy.chord = Chord.GetRandomChord();
             enemy.objective = targetObjective;
-            enemy.gameObject.SetActive(true);            
+            enemy.gameObject.SetActive(true);
+
+            REMOVE_NOTE_MONITOR.UpdateNoteMonitor(enemy);
+                        
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
+
         }
         else
         {
