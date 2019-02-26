@@ -67,12 +67,12 @@ public class Spawner : MonoBehaviour
     }
 
 
-    public void SpawnEnemy(MusicalNote rootNote, ChordType chordType, GameObject targetObjective)
+    public void SpawnEnemy(GameObject targetObjective)
     {
         if (m_enemies.Count > 0)
         {
             Enemy enemy = m_enemies.Dequeue().GetComponent<Enemy>();
-            enemy.SetChord(rootNote, chordType);
+            enemy.chord = Chord.GetRandomChord();
             enemy.objective = targetObjective;
             enemy.gameObject.SetActive(true);            
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
@@ -82,5 +82,11 @@ public class Spawner : MonoBehaviour
             Debug.Log("No more enemies to spawn, returning null");
         }
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 1f);
     }
 }

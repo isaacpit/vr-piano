@@ -1,4 +1,5 @@
-﻿using Types;
+﻿using System;
+using Types;
 
 [System.Serializable]
 public class Chord
@@ -48,5 +49,39 @@ public class Chord
                 break;
         }
         return (MusicalNote)(noteNum % 12);
+    }
+    public override string ToString()
+    {
+        string chordTypeText = "";
+        switch (chordType)
+        {
+            case ChordType.Major:
+            default:
+                chordTypeText = "maj";
+                break;
+            case ChordType.Minor:
+                chordTypeText = "min";
+                break;
+            case ChordType.Diminished:
+                chordTypeText = "dim";
+                break;
+            case ChordType.NUM_CHORDS:
+                chordTypeText = "ENUM_ERR";            
+                break;
+        }
+        string note = RootNote.ToString();
+        if(note.Length > 1)
+        {
+            note = note[0] + "#";
+        }
+        return note + chordTypeText;
+    }
+
+    public static Chord GetRandomChord()
+    {
+        ChordType chordType = (ChordType)UnityEngine.Random.Range(0, (int)ChordType.NUM_CHORDS);
+        MusicalNote rootNote = (MusicalNote)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(MusicalNote)).Length);
+        return new Chord(rootNote, chordType);
+
     }
 }

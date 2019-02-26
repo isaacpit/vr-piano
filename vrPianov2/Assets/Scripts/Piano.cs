@@ -25,6 +25,7 @@ public class Piano : MonoBehaviour
         {
             Debug.Log(keys[i]);
             keys[i].source.clip = instrument.GetPianoNoteAudio((MusicalNote)i);
+            keys[i].note = (MusicalNote)i;
             Debug.Log(keys[i].source.clip);
         }
     }
