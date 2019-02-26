@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     public Queue<GameObject> m_enemies;
     public int m_enemyPoolCount;
     public float randomDistanceRange = 0.1f;
+    public GameObject enemyObjective;
 
 
     private Random rnd;
@@ -49,6 +50,8 @@ public class Spawner : MonoBehaviour
             Enemy enemyRef = obj.GetComponent<Enemy>();
             enemyRef.m_startPos = v;
             enemyRef.m_spawner = this;
+            enemyRef.objective = enemyObjective;
+            //enemyRef.m_endPos = enemyObjective.transform.position;
             m_enemies.Enqueue(obj);
             obj.SetActive(false);
 
