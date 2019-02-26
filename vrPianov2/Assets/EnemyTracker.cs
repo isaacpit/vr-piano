@@ -43,9 +43,20 @@ public class EnemyTracker : MonoBehaviour
     {
         StopTracking();
         currentTrackingEnemy = e;
-        UpdateMonitorText();
+        UpdateTrackingMonitorText();
         PlayTrackingSound();
+        TurnOnTrackingAndHintLights();
         
+    }
+
+    private void TurnOnTrackingAndHintLights()
+    {
+        GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.RootNote).First().EnableLightTracking();
+        if (GameManager.Instance.isHintAvailable)
+        {
+            GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.SecondNote).First().EnableLightHint();
+            GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.ThirdNote).First().EnableLightHint();
+        }
     }
 
     private void PlayTrackingSound()
@@ -53,6 +64,7 @@ public class EnemyTracker : MonoBehaviour
         var clip = trackingSounds.GetPianoNoteAudio(currentTrackingEnemy.chord.RootNote);
         audioSource.clip = clip;
         audioSource.Play();
+        
     }
 
     public void StopTracking()
@@ -60,9 +72,18 @@ public class EnemyTracker : MonoBehaviour
         audioSource.Stop();
         currentTrackingEnemy = null;        
         trackingMonitor.PrintToScreen("");
+        RestoreKeyLights();
     }
 
-    private void UpdateMonitorText()
+    private void RestoreKeyLights()
+    {
+        foreach(var k in GameManager.Instance.piano.keys)
+        {
+            k.RestoreLight();
+        }
+    }
+
+    private void UpdateTrackingMonitorText()
     {
         trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
     }
