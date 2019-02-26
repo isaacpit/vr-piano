@@ -19,7 +19,7 @@ public class EnemyTracker : SimpleSingleton<EnemyTracker>
             }
             currentTrackingEnemy = EnemyManager.Instance.m_liveEnemies[index];            
         }
-        UpdateMonitorText();        
+        UpdateMonitorText();
     }
 
     private void UpdateMonitorText()

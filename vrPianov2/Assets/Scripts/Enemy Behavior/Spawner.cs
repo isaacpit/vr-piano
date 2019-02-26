@@ -15,6 +15,9 @@ public class Spawner : MonoBehaviour
     private Random rnd;
     private Vector3 spawnPosition;
 
+    
+    public NoteMonitor REMOVE_NOTE_MONITOR;
+
     private void Awake()
     {
 
@@ -74,7 +77,10 @@ public class Spawner : MonoBehaviour
             Enemy enemy = m_enemies.Dequeue().GetComponent<Enemy>();
             enemy.SetChord(rootNote, chordType);
             enemy.objective = targetObjective;
-            enemy.gameObject.SetActive(true);            
+            enemy.gameObject.SetActive(true);
+
+            REMOVE_NOTE_MONITOR.UpdateNoteMonitor(enemy);
+                        
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
         }
         else
