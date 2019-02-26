@@ -15,12 +15,11 @@ public class Spawner : MonoBehaviour
     private Random rnd;
     private Vector3 spawnPosition;
 
-    
     public NoteMonitor REMOVE_NOTE_MONITOR;
 
     private void Awake()
     {
-
+   
     }
 
     void Start()
@@ -70,23 +69,30 @@ public class Spawner : MonoBehaviour
     }
 
 
-    public void SpawnEnemy(MusicalNote rootNote, ChordType chordType, GameObject targetObjective)
+    public void SpawnEnemy(GameObject targetObjective)
     {
         if (m_enemies.Count > 0)
         {
             Enemy enemy = m_enemies.Dequeue().GetComponent<Enemy>();
-            enemy.SetChord(rootNote, chordType);
+            enemy.chord = Chord.GetRandomChord();
             enemy.objective = targetObjective;
             enemy.gameObject.SetActive(true);
 
             REMOVE_NOTE_MONITOR.UpdateNoteMonitor(enemy);
                         
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);
+
         }
         else
         {
             Debug.Log("No more enemies to spawn, returning null");
         }
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 1f);
     }
 }

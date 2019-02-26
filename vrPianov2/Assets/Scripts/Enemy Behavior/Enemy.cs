@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Types;
 using UnityEngine;
 
@@ -20,11 +21,12 @@ public class Enemy : MonoBehaviour
     public Material m_material;
     public List<Material> m_materials;
 
+    public bool hasSecondNoteBeenPlayed = false;
+    public bool hasThirdNoteBeenPlayed = false;
 
     // Start is called before the first frame update
     private void Awake()
     {
-
         m_material = GetComponent<MeshRenderer>().material;        
     }
 
@@ -50,17 +52,20 @@ public class Enemy : MonoBehaviour
         m_endPos = objective.transform.position;
         // add this enemy to m_liveEnemies queue
         EnemyManager.Instance.AddLiveEnemy(this);
+        
 
     }
 
     private void OnDisable()
     {
         // place back into spawner queue
+        hasSecondNoteBeenPlayed = false;
+        hasThirdNoteBeenPlayed = false;
         m_spawner.m_enemies.Enqueue(this.gameObject);
 
         // remove from InputManager's live queue
         //Enemy front = 
-        EnemyManager.Instance.RemoveLiveEnemy(this);
+        EnemyManager.Instance.RemoveLiveEnemy(this);        
         //if (front != this)
         //{
         //    Debug.Log("ERROR: front of queue m_liveEnemies != this object");
@@ -81,12 +86,13 @@ public class Enemy : MonoBehaviour
         chord = new Chord(note, chordType);
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
         float step = m_stepSize * Time.deltaTime;
         Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
-
 
         p[1] += Mathf.Sin(p[2]) / 100;
         p[0] += Mathf.Cos(p[2]) / 100;
@@ -102,12 +108,48 @@ public class Enemy : MonoBehaviour
 
     private void PoolDestroy(bool isDamage)
     {
-        this.gameObject.SetActive(false);
+        if (isDamage)
+        {
+            Debug.Log("Player Hit");
+        }
+        else
+        {
+            Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
+        }
+        gameObject.SetActive(false);
     }
 
     public void PrintEnemy()
     {
         Debug.Log("m_startPos: " + m_startPos.ToString("F4"));
         Debug.Log("m_endPos: " + m_endPos.ToString("F4"));
+    }
+
+    public bool CheckNoteToChord(MusicalNote note)
+    {
+        var noteHit = false;
+        if(note == chord.SecondNote)
+        {
+            hasSecondNoteBeenPlayed = true;
+            noteHit = true;
+        }else if(note == chord.ThirdNote)
+        {
+            hasThirdNoteBeenPlayed = true;
+            noteHit = true;
+        }
+        if (noteHit)
+        {
+            CheckForDeath();
+        }
+
+        return noteHit;
+    }
+
+    private void CheckForDeath()
+    {
+        if(hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
+        {
+            PoolDestroy(false);
+        }
     }
 }

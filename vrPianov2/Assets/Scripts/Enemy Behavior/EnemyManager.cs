@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Types;
+using System.Linq;
+using System;
 
 public class EnemyManager : SimpleSingleton<EnemyManager>
 {
@@ -14,15 +15,19 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     [SerializeField]
     private GameObject targetObjective;
+
+    public EnemyTracker tracker;    
     
     private void Awake()
     {
         m_liveEnemies = new List<Enemy>();
+        tracker = GetComponent<EnemyTracker>();
     }
 
     public void AddLiveEnemy(Enemy e)
     {
         m_liveEnemies.Add(e);
+        tracker.TrackEnemy(e);        
 
         //m_currentEnemy = m_liveEnemies[0];
         Debug.Log("m_liveEnemies: " + m_liveEnemies.Count);
@@ -31,6 +36,11 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     public void RemoveLiveEnemy(Enemy e)
     {
         m_liveEnemies.Remove(e);
+        tracker.StopTracking();
+
+        // TODO: REPLACE WITH DIFFERENT MECHANIC
+        GameManager.Instance.NextEnemy();
+
         //Enemy front = m_liveEnemies[0];
         //if (m_liveEnemies.Count > 0)
         //{
@@ -41,55 +51,67 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //    m_currentEnemy = null;
         //}
 
-
         //return front;
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_spawnerIndex = Random.Range(0, m_spawners.Count);
-            if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
-            {
-                if (m_spawners[m_spawnerIndex] != null)
-                {
-                    ChordType chord = (ChordType)Random.Range(0, (int)ChordType.NUM_CHORDS);
-                    MusicalNote rootNote = (MusicalNote)Random.Range(0, System.Enum.GetValues(typeof(MusicalNote)).Length);
-                    m_spawners[m_spawnerIndex].SpawnEnemy(rootNote, chord, targetObjective);
-                } 
-            }
-        }
-        if (m_currentEnemy != null)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                Debug.Log("Triggered 1 ");
-                if (m_currentEnemy.chord.chordType == ChordType.Major)
-                {
-                    m_currentEnemy.gameObject.SetActive(false);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Debug.Log("Triggered 2 ");
-                if (m_currentEnemy.chord.chordType == ChordType.Minor)
-                {
-                    m_currentEnemy.gameObject.SetActive(false);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                Debug.Log("Triggered 3 ");
-                if (m_currentEnemy.chord.chordType == ChordType.Diminished)
-                {
-                    m_currentEnemy.gameObject.SetActive(false);
-                }
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SpawnEnemy();
+        //}
+        //if (m_currentEnemy != null)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Alpha1))
+        //    {
+        //        Debug.Log("Triggered 1 ");
+        //        if (m_currentEnemy.chord.chordType == ChordType.Major)
+        //        {
+        //            m_currentEnemy.gameObject.SetActive(false);
+        //        }
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Alpha2))
+        //    {
+        //        Debug.Log("Triggered 2 ");
+        //        if (m_currentEnemy.chord.chordType == ChordType.Minor)
+        //        {
+        //            m_currentEnemy.gameObject.SetActive(false);
+        //        }
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Alpha3))
+        //    {
+        //        Debug.Log("Triggered 3 ");
+        //        if (m_currentEnemy.chord.chordType == ChordType.Diminished)
+        //        {
+        //            m_currentEnemy.gameObject.SetActive(false);
+        //        }
+        //    }
+        //}
 
 
+    }
+
+    public void SpawnEnemy()
+    {
+        m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
+        if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
+        {
+            if (m_spawners[m_spawnerIndex] != null)
+            {               
+                m_spawners[m_spawnerIndex].SpawnEnemy(targetObjective);
+            }
+            else
+            {
+                Debug.LogError("Missing spawners");
+            }
+        }
+        else
+        {
+            Debug.LogError("Spawner index out of bounds");
+        }
     }
 }

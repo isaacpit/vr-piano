@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
+using Types;
 
 public class PianoKey : MonoBehaviour
 {
     [HideInInspector]
     public AudioSource source;
+        
+    public MusicalNote note;
     private DistanceReader reader;
     [SerializeField]
     private float minimumWaitToPlay = .2f;
@@ -25,12 +29,6 @@ public class PianoKey : MonoBehaviour
     [SerializeField]
     private float lightIntensityDuration = .5f;
     private float startingIntensity;
-    
-
-
-
-    //private PianoHand currentHand;
-    //public GameObject physicalKey;
 
     private void Awake()
     {
@@ -40,15 +38,10 @@ public class PianoKey : MonoBehaviour
         keyLight = GetComponentInChildren<Light>();
         startingIntensity = keyLight.intensity;
         startingLightColor = keyLight.color;
-    }
+    }    
 
     private void OnCollisionEnter(Collision collision)
-    {
-        //soundStarted = true;
-        //if (!source.isPlaying && soundStarted)
-        //{
-        //    source.Stop();
-        //}
+    {        
         if (collision.gameObject.layer == LayerMask.NameToLayer("HandController") && readyToPlay)
         {
             var hand = collision.gameObject.GetComponent<PianoHand>();
@@ -64,6 +57,7 @@ public class PianoKey : MonoBehaviour
                 }
                 hand.currentSource = source;
                 source.Play();
+                EnemyManager.Instance.tracker.CheckNoteToEnemy(note);
                 StartCoroutine(WaitToPlayAgain(hand));
             }
         }
