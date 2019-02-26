@@ -15,10 +15,10 @@ TagManager:
   - 
   - HandController
   - PianoKey
-  - 
+  - PushButton
   - PianoBack
   - KeyboardContainer
-  - 
+  - ExcludeLight
   - 
   - 
   - 

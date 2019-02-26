@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f0ff3bc3d8dced34b9698875333aa5cb, type: 3}
+  m_Name: EnemyTracker
+  m_EditorClassIdentifier: 
+  C: {fileID: 8300000, guid: 140f89ca695e2ce4a9de340046a9de2b, type: 3}
+  Csharp: {fileID: 8300000, guid: 201233b2b142a8042be7b93f7882e384, type: 3}
+  D: {fileID: 8300000, guid: f6130b1abceb451468fd51463dee2847, type: 3}
+  Dsharp: {fileID: 8300000, guid: 25e9b4b5e8cf1eb41ad4e734be397b96, type: 3}
+  E: {fileID: 8300000, guid: 9c88801aa7730144d956f003fdf3972e, type: 3}
+  F: {fileID: 8300000, guid: 62407dacfd68941439341e602dea719c, type: 3}
+  Fsharp: {fileID: 8300000, guid: 02348740d96c9914baab3df02b963761, type: 3}
+  G: {fileID: 8300000, guid: 6a2065913612d824aa4aaa246202fb12, type: 3}
+  Gsharp: {fileID: 8300000, guid: 9cc99532b15e86d409d083c5b769411a, type: 3}
+  A: {fileID: 8300000, guid: 3a769982c53e5de49852aa6254c8ff39, type: 3}
+  Asharp: {fileID: 8300000, guid: 451fc0695da0fd8438ddd9bcb0fad8fa, type: 3}
+  B: {fileID: 8300000, guid: 5372f68a237c9714c8986081e3cfdff7, type: 3}
