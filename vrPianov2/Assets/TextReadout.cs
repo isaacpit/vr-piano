@@ -3,7 +3,7 @@ using TMPro;
 
 public class TextReadout : MonoBehaviour
 {
-    public void PrintToScreen(string text)
+    public virtual void PrintToScreen(string text)
     {
         GetComponent<TextMeshProUGUI>().text = text;
     }
