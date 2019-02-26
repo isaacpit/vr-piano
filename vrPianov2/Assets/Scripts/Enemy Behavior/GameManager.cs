@@ -5,8 +5,15 @@ public class GameManager : SimpleSingleton<GameManager>
 {
     public bool isHintAvailable = true;
 
+    public Piano piano;
+
     private void Start()
     {
+        if (!piano)
+        {
+            piano = FindObjectOfType<Piano>();
+        }
+
         NextEnemy();
     }
 

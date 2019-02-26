@@ -1,13 +1,12 @@
 ﻿using System.Collections;
-using UnityEngine;
-using System;
 using Types;
+using UnityEngine;
 
 public class PianoKey : MonoBehaviour
 {
     [HideInInspector]
     public AudioSource source;
-        
+
     public MusicalNote note;
     private DistanceReader reader;
     [SerializeField]
@@ -38,10 +37,10 @@ public class PianoKey : MonoBehaviour
         keyLight = GetComponentInChildren<Light>();
         startingIntensity = keyLight.intensity;
         startingLightColor = keyLight.color;
-    }    
+    }
 
     private void OnCollisionEnter(Collision collision)
-    {        
+    {
         if (collision.gameObject.layer == LayerMask.NameToLayer("HandController") && readyToPlay)
         {
             var hand = collision.gameObject.GetComponent<PianoHand>();
@@ -96,28 +95,21 @@ public class PianoKey : MonoBehaviour
     //    }
     //}
 
-    public void ToggleLightHint(bool isEnabled)
+    public void EnableLightHint()
     {
-        if (isEnabled)
-        {
-            keyLight.color = hintLightColor;
-        }
-        else
-        {
-            keyLight.color = startingLightColor;
-        }
+        keyLight.color = hintLightColor;
+        keyLight.intensity *= 1.25f;
     }
 
-    public void ToggleLightTracking(bool isEnabled)
+    public void EnableLightTracking()
     {
-        if (isEnabled)
-        {
-            keyLight.color = hintLightColor;
-        }
-        else
-        {
-            keyLight.color = startingLightColor;
-        }
+        keyLight.color = trackingLightColor;
+    }
+
+    public void RestoreLight()
+    {
+        keyLight.color = startingLightColor;
+        keyLight.intensity = startingIntensity;
     }
 
     IEnumerator ChangeLightIntensityOnTouch()

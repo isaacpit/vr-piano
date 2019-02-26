@@ -7,7 +7,8 @@ public class Piano : MonoBehaviour
 {
     public Instrument instrument;
 
-    PianoKey[] keys;
+    [HideInInspector]
+    public PianoKey[] keys;
 
     private void Awake()
     {
