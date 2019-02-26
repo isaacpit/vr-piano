@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public Vector3 m_endPos;
     public float m_stepSize;
     public GameObject objective;
-
+    
     [Space]
     [Header("Chord Info")]
     public Chord chord;
@@ -24,8 +24,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
 
-        m_material = GetComponent<MeshRenderer>().material;
-        m_endPos = objective.transform.position;
+        m_material = GetComponent<MeshRenderer>().material;        
     }
 
     void Start()
@@ -37,7 +36,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject == objective)
         {
-            this.PoolDestroy(true);
+            PoolDestroy(true);
         }
 
     }
@@ -47,9 +46,9 @@ public class Enemy : MonoBehaviour
         //InputManager.Instance.currentEnemy = this;
         transform.position = m_startPos;
         ChangeMaterial();
-
+        m_endPos = objective.transform.position;
         // add this enemy to m_liveEnemies queue
-        InputManager.Instance.addLiveEnemy(this);
+        EnemyManager.Instance.AddLiveEnemy(this);
 
     }
 
@@ -59,11 +58,12 @@ public class Enemy : MonoBehaviour
         m_spawner.m_enemies.Enqueue(this.gameObject);
 
         // remove from InputManager's live queue
-        Enemy front = InputManager.Instance.removeLiveEnemy();
-        if (front != this)
-        {
-            Debug.Log("ERROR: front of queue m_liveEnemies != this object");
-        }
+        //Enemy front = 
+        EnemyManager.Instance.RemoveLiveEnemy(this);
+        //if (front != this)
+        //{
+        //    Debug.Log("ERROR: front of queue m_liveEnemies != this object");
+        //}
     }
 
     private void ChangeMaterial()
@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
 
-        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, m_stepSize);
+        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, m_stepSize * Time.deltaTime);
 
         p[1] += Mathf.Sin(p[2]) / 100;
         p[0] += Mathf.Cos(p[2]) / 100;
@@ -94,8 +94,6 @@ public class Enemy : MonoBehaviour
     private void PoolDestroy(bool isDamage)
     {
         this.gameObject.SetActive(false);
-
-
     }
 
     public void PrintEnemy()

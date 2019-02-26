@@ -7,11 +7,11 @@ public class Piano : MonoBehaviour
 {
     public Instrument instrument;
 
-    PianoKeyAudio[] keys;
+    PianoKey[] keys;
 
     private void Awake()
     {
-        keys = GetComponentsInChildren<PianoKeyAudio>();       
+        keys = GetComponentsInChildren<PianoKey>();       
     }
 
     private void Start()

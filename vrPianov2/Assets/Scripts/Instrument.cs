@@ -7,14 +7,14 @@ public class Instrument : ScriptableObject
     public AudioClip C;
     public AudioClip Csharp;
     public AudioClip D;
-    public AudioClip Eb;
+    public AudioClip Dsharp;
     public AudioClip E;
     public AudioClip F;
     public AudioClip Fsharp;
     public AudioClip G;
     public AudioClip Gsharp;
     public AudioClip A;
-    public AudioClip Bb;
+    public AudioClip Asharp;
     public AudioClip B;    
 
     public AudioClip GetPianoNoteAudio(MusicalNote note)
@@ -33,7 +33,7 @@ public class Instrument : ScriptableObject
                 clip = D;
                 break;
             case MusicalNote.Dsharp:
-                clip = Eb;
+                clip = Dsharp;
                 break;
             case MusicalNote.E:
                 clip = E;
@@ -54,7 +54,7 @@ public class Instrument : ScriptableObject
                 clip = A;
                 break;
             case MusicalNote.Asharp:
-                clip = Bb;
+                clip = Asharp;
                 break;
             case MusicalNote.B:
                 clip = B;
