@@ -110,19 +110,19 @@ public class Enemy : MonoBehaviour
     {
         if (isDamageToPlayer)
         {
-            Debug.Log("Player Hit");
+          //  Debug.Log("Player Hit");
         }
         else
         {
-            Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
+        //    Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
         }
         gameObject.SetActive(false);
     }
 
     public void PrintEnemy()
     {
-        Debug.Log("m_startPos: " + m_startPos.ToString("F4"));
-        Debug.Log("m_endPos: " + m_endPos.ToString("F4"));
+        //Debug.Log("m_startPos: " + m_startPos.ToString("F4"));
+        //Debug.Log("m_endPos: " + m_endPos.ToString("F4"));
     }
 
     public bool CheckNoteToChord(MusicalNote note)
