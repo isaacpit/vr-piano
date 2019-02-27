@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     public bool hasSecondNoteBeenPlayed = false;
     public bool hasThirdNoteBeenPlayed = false;
 
+    [Header("Death FX")]
+    public AudioClip deathSound;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -110,7 +113,8 @@ public class Enemy : MonoBehaviour
     {
         if (isDamageToPlayer)
         {
-          //  Debug.Log("Player Hit");
+            //  Debug.Log("Player Hit");
+            EnemyManager.Instance.PlayHurtFX();
         }
         else
         {
@@ -151,5 +155,11 @@ public class Enemy : MonoBehaviour
         {
             PoolDestroy(false);
         }
+    }
+
+    public void OnRemoved()
+    {
+        EnemyManager.Instance.audioSource.PlayOneShot(deathSound);
+        EnemyManager.Instance.PlayExplosionFX(this.transform, 50);
     }
 }

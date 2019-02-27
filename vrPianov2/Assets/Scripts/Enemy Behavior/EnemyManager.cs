@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Types;
 using System.Linq;
@@ -16,8 +17,19 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     [SerializeField]
     private GameObject targetObjective;
 
-    public EnemyTracker tracker;    
-    
+    public EnemyTracker tracker;
+
+    [Header("Special FX")]
+    public float hurtFXDurationSec;
+    public AudioSource audioSource;
+    public Color defaultLightColor;
+    public Color hurtLightColor;
+    public List<Light> cockpitLights = new List<Light>();
+
+    [Space]
+    public ParticleSystem explosionFX;
+    Coroutine hurtFXCoroutine;
+
     private void Awake()
     {
         m_liveEnemies = new List<Enemy>();
@@ -35,6 +47,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     public void RemoveLiveEnemy(Enemy e)
     {
+        e.OnRemoved();
         m_liveEnemies.Remove(e);
         tracker.StopTracking();
 
@@ -52,9 +65,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //}
 
         //return front;
-    }
-
-    
+    } 
 
     // Update is called once per frame
     void Update()
@@ -91,8 +102,6 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //        }
         //    }
         //}
-
-
     }
 
     public void SpawnEnemy()
@@ -113,5 +122,38 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         {
             Debug.LogError("Spawner index out of bounds");
         }
+    }
+
+    public void PlayExplosionFX(Transform location, int particleCount)
+    {
+        explosionFX.transform.position = location.position;
+        explosionFX.Emit(particleCount);
+    }
+
+    public void PlayHurtFX()
+    {
+        if (hurtFXCoroutine != null)
+        {
+            StopCoroutine(hurtFXCoroutine);
+        }
+
+        hurtFXCoroutine = StartCoroutine(HurtFXCoroutine(hurtFXDurationSec));
+    }
+
+    IEnumerator HurtFXCoroutine(float durationSec)
+    {        
+        foreach (Light cockpitLight in cockpitLights)
+        {
+            cockpitLight.color = hurtLightColor;
+        }
+
+        yield return new WaitForSeconds(durationSec);
+
+        foreach (Light cockpitLight in cockpitLights)
+        {
+            cockpitLight.color = defaultLightColor;
+        }
+
+        yield break;
     }
 }
