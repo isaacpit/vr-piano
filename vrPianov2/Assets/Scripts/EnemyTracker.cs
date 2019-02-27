@@ -71,8 +71,7 @@ public class EnemyTracker : MonoBehaviour
     public void StopTracking()
     {
         audioSource.Stop();
-        currentTrackingEnemy = null;        
-        trackingMonitor.PrintToScreen("");
+        currentTrackingEnemy = null;
         RestoreKeyLights();
     }
 
@@ -80,7 +79,7 @@ public class EnemyTracker : MonoBehaviour
     {
         foreach(var k in GameManager.Instance.piano.keys)
         {
-            k.RestoreLight();
+            k.RestoreKeyColor();
         }
     }
 

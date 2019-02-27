@@ -8,14 +8,19 @@ public class GameManager : SimpleSingleton<GameManager>
     public bool readyToSpawn = true;    
     
     public Piano piano;
+    public CommonColors colors;
 
-    private void Start()
+    private void Awake()
     {
         if (!piano)
         {
             piano = FindObjectOfType<Piano>();
         }
+        colors = GetComponent<CommonColors>();
+    }
 
+    private void Start()
+    {
         StartSpawning();
     }
 
@@ -47,7 +52,8 @@ public class GameManager : SimpleSingleton<GameManager>
         if (enemy)
         {
            enemy.PoolDestroy(false);
-        }        
+        }
+        EnemyManager.Instance.tracker.noteMonitor.PrintToScreen("JAM OUT");
     }
 
     public void StartSpawning()

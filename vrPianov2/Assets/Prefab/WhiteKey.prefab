@@ -320,8 +320,5 @@ MonoBehaviour:
   minimumWaitToPlay: 0.2
   readyToPlay: 1
   soundStarted: 0
-  hintMat: {fileID: 2100000, guid: 5e4868fd9cbfb6b44ad9d71623b6ed4d, type: 2}
-  hintLightColor: {r: 0.30621067, g: 0.8679245, b: 0.1760413, a: 1}
-  trackingLightColor: {r: 0.8584906, g: 0.13363297, b: 0.13363297, a: 1}
   touchLightIntensity: 1.2
   lightIntensityDuration: 0.5

@@ -84,8 +84,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432023891}
-  m_LocalRotation: {x: -0.483072, y: -0.53558975, z: -0.48965973, w: 0.48991677}
-  m_LocalPosition: {x: -3.754, y: -0.148, z: 0.366}
+  m_LocalRotation: {x: -0.47943315, y: -0.53195167, z: -0.4936098, w: 0.4934782}
+  m_LocalPosition: {x: -3.643, y: -0.148, z: 0.187}
   m_LocalScale: {x: 0.24113032, y: 0.05034476, z: 0.24795255}
   m_Children:
   - {fileID: 1768198025}
@@ -97,7 +97,7 @@ Transform:
   - {fileID: 1861368032}
   m_Father: {fileID: 3976106443333281304}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -86.23701, y: -128.022, z: 35.026}
+  m_LocalEulerAnglesHint: {x: -86.691, y: -116.39101, z: 23.372002}
 --- !u!1 &582771036
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450233013}
   m_LocalRotation: {x: 0.6875415, y: 0.04877627, z: 0.020297438, w: 0.72422075}
-  m_LocalPosition: {x: 0, y: 0, z: 1.14}
+  m_LocalPosition: {x: 0, y: 0, z: 1.15}
   m_LocalScale: {x: 5.556072, y: 5.278778, z: 25.457533}
   m_Children:
   - {fileID: 1527749423}
@@ -754,7 +754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -87.394005, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.14, y: -1.9}
+  m_AnchoredPosition: {x: -0.1, y: -1.96}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1450233017
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 1861368032}
   - component: {fileID: 1861368034}
   - component: {fileID: 1861368033}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: ButtonBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4051,7 +4051,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 60, z: 0.1}
-  m_Center: {x: 0, y: -15, z: 0.6}
+  m_Center: {x: 0, y: -15, z: 0.55}
 --- !u!1 &3976106442148117820
 GameObject:
   m_ObjectHideFlags: 0
@@ -4615,7 +4615,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 60, z: 1}
-  m_Center: {x: 0.6, y: -15, z: 0}
+  m_Center: {x: 0.55, y: -15, z: 0}
 --- !u!1 &3976106442534543538
 GameObject:
   m_ObjectHideFlags: 0
@@ -5035,7 +5035,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3976106442972727729}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2774755734700881162}
@@ -5043,7 +5043,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.001, y: -0.007}
   m_SizeDelta: {x: 0.75, y: 0.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3976106442972727725
@@ -5286,7 +5286,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 60, z: 1}
-  m_Center: {x: -0.6, y: -15, z: 0}
+  m_Center: {x: -0.55, y: -15, z: 0}
 --- !u!1 &3976106443030055306
 GameObject:
   m_ObjectHideFlags: 0
@@ -6009,7 +6009,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 60, z: 0.1}
-  m_Center: {x: 0, y: -15, z: -0.6}
+  m_Center: {x: 0, y: -15, z: -0.55}
 --- !u!1 &3976106443480604126
 GameObject:
   m_ObjectHideFlags: 0
@@ -6569,10 +6569,10 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_Spring: 30
-  m_Damper: 10
-  m_MinDistance: 0.001
-  m_MaxDistance: 0.002
+  m_Spring: 300
+  m_Damper: 20
+  m_MinDistance: 0.005
+  m_MaxDistance: 0.006
   m_Tolerance: 0.025
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -6688,9 +6688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb920a72d4200e4b8c2753d74e5a248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAlpha: 0.75
+  minAlpha: 0.5
   maxAlpha: 1
-  pulseRate: 1
+  pulseRate: 0.5
 --- !u!1001 &2371942522491775154
 PrefabInstance:
   m_ObjectHideFlags: 0

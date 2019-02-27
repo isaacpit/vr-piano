@@ -15,17 +15,8 @@ public class PianoKey : MonoBehaviour
     public bool soundStarted = false;
 
     private Light keyLight;
-
-    [SerializeField]
-    private Material hintMat;
-
-    private Material originalMaterial;
-
-    [SerializeField]
-    private Color hintLightColor;
-    [SerializeField]
-    private Color trackingLightColor;
-    private Color startingLightColor;
+    
+    private Color originalColor;
 
     [SerializeField]
     private float touchLightIntensity = 1.2f;
@@ -38,9 +29,8 @@ public class PianoKey : MonoBehaviour
         source = GetComponent<AudioSource>();
         readyToPlay = true;
         keyLight = GetComponentInChildren<Light>();
-        startingIntensity = keyLight.intensity;
-        startingLightColor = keyLight.color;
-        originalMaterial = GetComponent<Renderer>().material;
+        startingIntensity = keyLight.intensity;        
+        originalColor = GetComponent<Renderer>().material.color;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -101,19 +91,21 @@ public class PianoKey : MonoBehaviour
 
     public void EnableLightHint()
     {
-        GetComponent<Renderer>().material = hintMat;
+        GetComponent<Renderer>().material.color = GameManager.Instance.colors.hintColor;
+        GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.hintColor);
     }
 
     public void EnableLightTracking()
     {
-        keyLight.color = trackingLightColor;
+        GetComponent<Renderer>().material.color = GameManager.Instance.colors.trackingColor;
+        GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.trackingColor);
     }
 
-    public void RestoreLight()
+    public void RestoreKeyColor()
     {
-        keyLight.color = startingLightColor;
         keyLight.intensity = startingIntensity;
-        GetComponent<Renderer>().material = originalMaterial;
+        GetComponent<Renderer>().material.color = originalColor;
+        GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color());
 
     }
 

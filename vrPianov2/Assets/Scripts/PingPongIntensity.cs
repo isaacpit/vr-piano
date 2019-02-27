@@ -16,10 +16,16 @@ public class PingPongIntensity : MonoBehaviour
     void Awake()
     {
         light = GetComponent<Light>();
+        TogglePingPongLight(false);
     }
 
     void Update()
-    {
+    {        
         light.intensity = Mathf.PingPong(Time.time * blinkRate, maxIntensity-minIntensity) + minIntensity;
+    }
+
+    public void TogglePingPongLight(bool lightEnabled)
+    {
+        enabled = lightEnabled;
     }
 }

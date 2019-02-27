@@ -1,5 +1,6 @@
 ﻿using System;
 using Types;
+using UnityEngine;
 
 [System.Serializable]
 public class Chord
@@ -57,13 +58,13 @@ public class Chord
         {
             case ChordType.Major:
             default:
-                chordTypeText = "maj";
+                chordTypeText = "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.majorColor) + ">maj</color>";
                 break;
             case ChordType.Minor:
-                chordTypeText = "min";
+                chordTypeText = "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.minorColor) + ">min</color>";
                 break;
             case ChordType.Diminished:
-                chordTypeText = "dim";
+                chordTypeText = "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.diminishedColor) + ">dim</color>";
                 break;
             case ChordType.NUM_CHORDS:
                 chordTypeText = "ENUM_ERR";            

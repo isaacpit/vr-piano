@@ -5,9 +5,6 @@ using TMPro;
 
 public class NoteMonitor : TextReadout
 {
-    public Color hintColor;
-    public Color trackingColor;
-
     public void UpdateNoteMonitor(Enemy enemy)
     {
         if (enemy != null)
@@ -37,7 +34,7 @@ public class NoteMonitor : TextReadout
         thirdNote = ShortNote(thirdNote);
 
 
-        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(trackingColor) + ">" + rootNote;
+        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + ">" + rootNote;
 
         //if (enemy.hasSecondNoteBeenPlayed)
         //{
@@ -82,11 +79,11 @@ public class NoteMonitor : TextReadout
     {
         if (beenPlayed)
         {
-            str += "<color=#" + ColorUtility.ToHtmlStringRGB(trackingColor) + "> ";
+            str += "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + "> ";
         }
         else
         {
-            str += "<color=#" + ColorUtility.ToHtmlStringRGB(hintColor) + "> ";
+            str += "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.hintColor) + "> ";
         }
         str += note + " ";
 

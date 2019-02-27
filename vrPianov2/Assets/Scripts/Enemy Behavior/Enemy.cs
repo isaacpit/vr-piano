@@ -18,8 +18,8 @@ public class Enemy : MonoBehaviour
     [Header("Chord Info")]
     public Chord chord;
     //public ChordType chordType = ChordType.Major;
-    public Material m_material;
-    public List<Material> m_materials;
+    private MeshRenderer m_meshRenderer;
+    //public List<Material> m_materials;
 
     public bool hasSecondNoteBeenPlayed = false;
     public bool hasThirdNoteBeenPlayed = false;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        m_material = GetComponent<MeshRenderer>().material;        
+        m_meshRenderer = GetComponent<MeshRenderer>();        
     }
 
     void Start()
@@ -78,10 +78,26 @@ public class Enemy : MonoBehaviour
     private void ChangeMaterial()
     {
         Debug.Log("chordType: " + chord.chordType);
-
-        m_material = m_materials[(int)chord.chordType];
-        Debug.Log("m_material: " + m_material.name);
-        GetComponent<MeshRenderer>().material = m_material;
+        switch (chord.chordType)
+        {
+            case ChordType.Major:
+            case ChordType.NUM_CHORDS:
+            default:
+                m_meshRenderer.material.color = GameManager.Instance.colors.majorColor;
+                m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.majorColor);
+                break;
+            case ChordType.Minor:
+                m_meshRenderer.material.color = GameManager.Instance.colors.minorColor;
+                m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.minorColor);
+                break;
+            case ChordType.Diminished:
+                m_meshRenderer.material.color = GameManager.Instance.colors.diminishedColor;
+                m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.diminishedColor);
+                break;            
+        }
+        //m_material = m_materials[(int)chord.chordType];
+        //Debug.Log("m_material: " + m_material.name);
+        //GetComponent<MeshRenderer>().material = m_material;
     }
 
     public void SetChord(MusicalNote note, ChordType chordType)

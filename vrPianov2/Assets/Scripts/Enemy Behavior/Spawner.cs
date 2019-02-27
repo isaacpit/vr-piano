@@ -10,13 +10,9 @@ public class Spawner : MonoBehaviour
     public Queue<GameObject> m_enemies;
     public int m_enemyPoolCount;
     public float randomDistanceRange = 0.1f;
-    public GameObject enemyObjective;
-
 
     private Random rnd;
     private Vector3 spawnPosition;
-
-    public NoteMonitor REMOVE_NOTE_MONITOR;
 
     private void Awake()
     {
@@ -39,7 +35,7 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < m_enemyPoolCount; ++i)
         {
-            Vector3 v = getRandomPoint();
+            Vector3 v = GetRandomPoint();
 
             GameObject obj = Instantiate(m_enemy);
 
@@ -50,7 +46,6 @@ public class Spawner : MonoBehaviour
             Enemy enemyRef = obj.GetComponent<Enemy>();
             enemyRef.m_startPos = v;
             enemyRef.m_spawner = this;
-            enemyRef.objective = enemyObjective;
             //enemyRef.m_endPos = enemyObjective.transform.position;
             m_enemies.Enqueue(obj);
             obj.SetActive(false);
@@ -58,15 +53,15 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    Vector3 getRandomPoint()
+    Vector3 GetRandomPoint()
     {
         
-        float xpos = Random.Range(spawnPosition[0] - randomDistanceRange, 
-            spawnPosition[0] + randomDistanceRange);
-        float ypos = Random.Range(spawnPosition[1] - randomDistanceRange,
-            spawnPosition[1] + randomDistanceRange);
-        float zpos = Random.Range(spawnPosition[2] - randomDistanceRange,
-            spawnPosition[2] + randomDistanceRange);
+        float xpos = Random.Range(transform.position.x - randomDistanceRange, 
+            transform.position.x + randomDistanceRange);
+        float ypos = Random.Range(transform.position.y - randomDistanceRange,
+            transform.position.y + randomDistanceRange);
+        float zpos = Random.Range(transform.position.z - randomDistanceRange,
+            transform.position.z + randomDistanceRange);
 
         return new Vector3(xpos, ypos, zpos);
     }
@@ -79,6 +74,7 @@ public class Spawner : MonoBehaviour
             Enemy enemy = m_enemies.Dequeue().GetComponent<Enemy>();
             enemy.chord = Chord.GetRandomChord();
             enemy.objective = targetObjective;
+            enemy.m_startPos = GetRandomPoint();
             enemy.gameObject.SetActive(true);
                         
             Debug.Log("spawnEnemy | Queue: " + m_enemies.Count);

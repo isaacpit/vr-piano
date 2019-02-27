@@ -34,6 +34,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     {
         m_liveEnemies = new List<Enemy>();
         tracker = GetComponent<EnemyTracker>();
+        defaultLightColor = cockpitLights[0].color;
     }
 
     public void AddLiveEnemy(Enemy e)
@@ -141,16 +142,21 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     }
 
     IEnumerator HurtFXCoroutine(float durationSec)
-    {        
+    {           
         foreach (Light cockpitLight in cockpitLights)
         {
+            if(cockpitLight.GetComponent<PingPongIntensity>())
+                cockpitLight.GetComponent<PingPongIntensity>().TogglePingPongLight(true);
             cockpitLight.color = hurtLightColor;
         }
+
 
         yield return new WaitForSeconds(durationSec);
 
         foreach (Light cockpitLight in cockpitLights)
         {
+            if (cockpitLight.GetComponent<PingPongIntensity>())
+                cockpitLight.GetComponent<PingPongIntensity>().TogglePingPongLight(false);
             cockpitLight.color = defaultLightColor;
         }
 
