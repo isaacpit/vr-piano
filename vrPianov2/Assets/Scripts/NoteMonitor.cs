@@ -5,6 +5,14 @@ using TMPro;
 
 public class NoteMonitor : TextReadout
 {
+
+    private Color startingTextColor;
+
+    private void Awake()
+    {
+        startingTextColor = GetComponent<TextMeshProUGUI>().color;    
+    }
+
     public void UpdateNoteMonitor(Enemy enemy)
     {
         if (enemy != null)
@@ -34,7 +42,7 @@ public class NoteMonitor : TextReadout
         thirdNote = ShortNote(thirdNote);
 
 
-        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + ">" + rootNote;
+        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + ">" + rootNote +"</color>";
 
         //if (enemy.hasSecondNoteBeenPlayed)
         //{
@@ -83,9 +91,9 @@ public class NoteMonitor : TextReadout
         }
         else
         {
-            str += "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.hintColor) + "> ";
+            str += "<color=#" + ColorUtility.ToHtmlStringRGB(startingTextColor) + "> ";
         }
-        str += note + " ";
+        str += note + "</color>";
 
         return str;
     }

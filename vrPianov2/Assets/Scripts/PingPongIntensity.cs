@@ -12,10 +12,13 @@ public class PingPongIntensity : MonoBehaviour
     private float blinkRate = 1f;
 
     private Light light;
+
+    private float startingIntensity;
     
     void Awake()
     {
         light = GetComponent<Light>();
+        startingIntensity = light.intensity;
         TogglePingPongLight(false);
     }
 
@@ -27,5 +30,7 @@ public class PingPongIntensity : MonoBehaviour
     public void TogglePingPongLight(bool lightEnabled)
     {
         enabled = lightEnabled;
+        if (!enabled)
+            light.intensity = startingIntensity;
     }
 }
