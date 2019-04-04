@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : SimpleSingleton<GameManager>
 {
-    public bool isHintAvailable = true;
     public bool readyToSpawn = true;    
     
     public Piano piano;

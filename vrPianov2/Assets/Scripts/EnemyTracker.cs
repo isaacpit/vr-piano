@@ -52,11 +52,24 @@ public class EnemyTracker : MonoBehaviour
 
     private void TurnOnTrackingAndHintLights()
     {
-        GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.RootNote).First().EnableLightTracking();
-        if (GameManager.Instance.isHintAvailable)
+        switch(DifficultyManager.Instance.currentDifficultySettings.difficultyObject.numberOfHintKeys)//TODO Change to ifs?
         {
-            GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.SecondNote).First().EnableLightHint();
-            GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.ThirdNote).First().EnableLightHint();
+            case 4:
+                //TODO Check if the fourth note is needed to complete the chord
+                //GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.FourthNote).First().EnableLightHint();
+                goto case 3;
+
+            case 3:
+                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.ThirdNote).First().EnableLightHint();
+                goto case 2;
+
+            case 2:
+                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.SecondNote).First().EnableLightHint();
+                goto default;
+
+            default:
+                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.RootNote).First().EnableLightTracking();
+                break;
         }
     }
 
