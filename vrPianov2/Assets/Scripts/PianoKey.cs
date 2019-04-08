@@ -23,6 +23,8 @@ public class PianoKey : MonoBehaviour
     [SerializeField]
     private float lightIntensityDuration = .5f;
     private float startingIntensity;
+    private float incorrectLightFlashDuration = .1f;
+    private int incorrectLightFlashAmount = 3;
 
     private void Awake()
     {
@@ -89,16 +91,21 @@ public class PianoKey : MonoBehaviour
     //    }
     //}
 
-    public void EnableLightHint()
+    public void EnableCorrectColor()
     {
-        GetComponent<Renderer>().material.color = GameManager.Instance.colors.hintColor;
-        GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.hintColor);
+        GetComponent<Renderer>().material.color = GameManager.Instance.colors.correctColor;
+        GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.correctColor);
     }
 
-    public void EnableLightTracking()
+    public IEnumerator FlashIncorrectColor()
     {
-        GetComponent<Renderer>().material.color = GameManager.Instance.colors.trackingColor;
-        GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.trackingColor);
+        for (int i = 0; i < incorrectLightFlashAmount; i++)
+        {
+            GetComponent<Renderer>().material.color = GameManager.Instance.colors.incorrectColor;
+            GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.incorrectColor);
+            yield return new WaitForSeconds(incorrectLightFlashDuration); 
+        }
+
     }
 
     public void RestoreKeyColor()

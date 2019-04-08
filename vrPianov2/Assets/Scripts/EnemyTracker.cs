@@ -14,7 +14,7 @@ public class EnemyTracker : MonoBehaviour
 
     [SerializeField]
     private Instrument trackingSounds;
-    
+
     private AudioSource audioSource;
 
     //[SerializeField]
@@ -43,42 +43,41 @@ public class EnemyTracker : MonoBehaviour
     public void TrackEnemy(Enemy e)
     {
         StopTracking();
-        currentTrackingEnemy = e;        
+        currentTrackingEnemy = e;
         UpdateMonitors();
         PlayTrackingSound();
-        TurnOnTrackingAndHintLights();
+        //TurnOnTrackingAndHintLights();
 
     }
 
-    private void TurnOnTrackingAndHintLights()
-    {
-        switch(DifficultyManager.Instance.currentDifficultySettings.difficultyObject.numberOfHintKeys)//TODO Change to ifs?
-        {
-            case 4:
-                //TODO Check if the fourth note is needed to complete the chord
-                //GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.FourthNote).First().EnableLightHint();
-                goto case 3;
-
-            case 3:
-                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.ThirdNote).First().EnableLightHint();
-                goto case 2;
-
-            case 2:
-                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.SecondNote).First().EnableLightHint();
-                goto default;
-
-            default:
-                GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.RootNote).First().EnableLightTracking();
-                break;
-        }
-    }
+    //Left here in case we change our minds
+    //private void TurnOnTrackingAndHintLights()
+    //{
+    //    if (LevelManager.Instance.currentHandicaps.numberOfHintKeys > 3)
+    //    {
+    //        //TODO Check if the fourth note is needed to complete the chord
+    //        //GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.FourthNote).First().EnableLightHint();
+    //    }
+    //    if (LevelManager.Instance.currentHandicaps.numberOfHintKeys > 2)
+    //    {
+    //        GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.ThirdNote).First().EnableLightHint();
+    //    }
+    //    if (LevelManager.Instance.currentHandicaps.numberOfHintKeys > 1)
+    //    {
+    //        GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.SecondNote).First().EnableLightHint();
+    //    }
+    //    if (LevelManager.Instance.currentHandicaps.numberOfHintKeys > 0)
+    //    {
+    //        GameManager.Instance.piano.keys.Where(x => x.note == currentTrackingEnemy.chord.RootNote).First().EnableLightTracking();
+    //    }
+    //}
 
     private void PlayTrackingSound()
     {
         var clip = trackingSounds.GetPianoNoteAudio(currentTrackingEnemy.chord.RootNote);
         audioSource.clip = clip;
         audioSource.Play();
-        
+
     }
 
     public void StopTracking()
@@ -90,7 +89,7 @@ public class EnemyTracker : MonoBehaviour
 
     private void RestoreKeyLights()
     {
-        foreach(var k in GameManager.Instance.piano.keys)
+        foreach (var k in GameManager.Instance.piano.keys)
         {
             k.RestoreKeyColor();
         }
@@ -98,20 +97,33 @@ public class EnemyTracker : MonoBehaviour
 
     private void UpdateMonitors()
     {
-        trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
-        noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
+        if (LevelManager.Instance.currentHandicaps.showNotesOnDisplay)
+        {
+            trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
+            noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
+        }
+        else
+        {
+            //TODO Show blank or have stages of showing
+        }
     }
 
     public void CheckNoteToEnemy(MusicalNote note)
     {
-        if (currentTrackingEnemy && currentTrackingEnemy.CheckNoteToChord(note))
+        if (currentTrackingEnemy && currentTrackingEnemy.CheckNoteToChord(note))//Correct
         {
-            noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
-            Debug.Log($"Note hit: {note} ");
+            if (LevelManager.Instance.currentHandicaps.showRightOrWrongOnDisplay)
+            {
+                noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
+                Debug.Log($"Note hit: {note} ");
+            }
         }
-        else
+        else//Incorrect
         {
-            Debug.Log("wrong note");
+            if (LevelManager.Instance.currentHandicaps.showRightOrWrongOnDisplay)
+            {
+                Debug.Log("wrong note");
+            }
         }
     }
 

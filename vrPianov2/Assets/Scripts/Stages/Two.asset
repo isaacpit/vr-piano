@@ -11,16 +11,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 14ef2f03f34984a4ca920a2321a27a46, type: 3}
-  m_Name: Test
+  m_Name: Two
   m_EditorClassIdentifier: 
-  numberOfHintKeys: 0
-  possibleChordTypes: 
-  possibleMusicalNotes: 
-  WeightedEnemyTypes:
-    items:
-    - item: 0
-      weight: 40
-    - item: 1
-      weight: 40
-    - item: 2
-      weight: 20
+  stageType: 1
+  minEnemySpeed: 0
+  maxEnemySpeed: 0
+  weightedEnemyList: []
+  weightedMusicalNoteList: []

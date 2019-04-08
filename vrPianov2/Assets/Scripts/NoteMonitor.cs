@@ -42,7 +42,7 @@ public class NoteMonitor : TextReadout
         thirdNote = ShortNote(thirdNote);
 
 
-        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + ">" + rootNote +"</color>";
+        string str = "Notes: \n\n<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.incorrectColor) + ">" + rootNote +"</color>";
 
         //if (enemy.hasSecondNoteBeenPlayed)
         //{
@@ -87,7 +87,7 @@ public class NoteMonitor : TextReadout
     {
         if (beenPlayed)
         {
-            str += "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.trackingColor) + "> ";
+            str += "<color=#" + ColorUtility.ToHtmlStringRGB(GameManager.Instance.colors.incorrectColor) + "> ";
         }
         else
         {

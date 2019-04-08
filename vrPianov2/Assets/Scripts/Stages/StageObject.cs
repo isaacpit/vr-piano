@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Types;
 
-[CreateAssetMenu(menuName = "DifficultyObject")]
-public class DifficultyObject : ScriptableObject
+[CreateAssetMenu(menuName = "StageObject")]
+public class StageObject : ScriptableObject
 {
     [Header("Settings")]
-    public bool showMusicalNotesOnKeyboard;
-    public int numberOfHintKeys;
+    public StageType stageType;
     public float minEnemySpeed;
     public float maxEnemySpeed;
     public List<WeightedEnemy> weightedEnemyList;// Ask about clusters vs this... Do they overlap/contradict?

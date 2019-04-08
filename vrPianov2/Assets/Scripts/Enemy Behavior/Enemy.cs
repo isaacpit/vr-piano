@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Types;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class Enemy : MonoBehaviour
     public float m_stepSize;
     public float m_rotateSpeed;
     public GameObject objective;
-    
+
     [Space]
     [Header("Chord Info")]
     public Chord chord;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     private MeshRenderer m_meshRenderer;
     //public List<Material> m_materials;
 
+    public bool hasRootNoteBeenPlayed = false;
     public bool hasSecondNoteBeenPlayed = false;
     public bool hasThirdNoteBeenPlayed = false;
 
@@ -30,7 +32,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        m_meshRenderer = GetComponent<MeshRenderer>();        
+        m_meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -55,20 +57,21 @@ public class Enemy : MonoBehaviour
         m_endPos = objective.transform.position;
         // add this enemy to m_liveEnemies queue
         EnemyManager.Instance.AddLiveEnemy(this);
-        
+
 
     }
 
     private void OnDisable()
     {
         // place back into spawner queue
+        hasRootNoteBeenPlayed = false;
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
         m_spawner.m_enemies.Enqueue(this.gameObject);
 
         // remove from InputManager's live queue
         //Enemy front = 
-        EnemyManager.Instance.RemoveLiveEnemy(this);        
+        EnemyManager.Instance.RemoveLiveEnemy(this);
         //if (front != this)
         //{
         //    Debug.Log("ERROR: front of queue m_liveEnemies != this object");
@@ -93,7 +96,7 @@ public class Enemy : MonoBehaviour
             case ChordType.Diminished:
                 m_meshRenderer.material.color = GameManager.Instance.colors.diminishedColor;
                 m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.diminishedColor);
-                break;            
+                break;
         }
         //m_material = m_materials[(int)chord.chordType];
         //Debug.Log("m_material: " + m_material.name);
@@ -105,7 +108,7 @@ public class Enemy : MonoBehaviour
         chord = new Chord(note, chordType);
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
@@ -134,7 +137,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-        //    Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
+            //    Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
         }
         gameObject.SetActive(false);
     }
@@ -148,14 +151,39 @@ public class Enemy : MonoBehaviour
     public bool CheckNoteToChord(MusicalNote note)
     {
         var noteHit = false;
-        if(note == chord.SecondNote)
+        if(note == chord.RootNote)
+        {
+            hasRootNoteBeenPlayed = true;
+            noteHit = true;
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.RootNote).First().EnableCorrectColor();
+            }
+        }
+        else if (note == chord.SecondNote)
         {
             hasSecondNoteBeenPlayed = true;
             noteHit = true;
-        }else if(note == chord.ThirdNote)
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.SecondNote).First().EnableCorrectColor();
+            }
+        }
+        else if (note == chord.ThirdNote)
         {
             hasThirdNoteBeenPlayed = true;
             noteHit = true;
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.ThirdNote).First().EnableCorrectColor();
+            }
+        }
+        else
+        {
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                StartCoroutine(GameManager.Instance.piano.keys.Where(x => x.note == note).First().FlashIncorrectColor());
+            }
         }
         if (noteHit)
         {
@@ -167,7 +195,7 @@ public class Enemy : MonoBehaviour
 
     private void CheckForDeath()
     {
-        if(hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
+        if (hasRootNoteBeenPlayed && hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
         {
             PoolDestroy(false);
         }

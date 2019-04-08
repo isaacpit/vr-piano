@@ -12,7 +12,7 @@ public class CommonColors : MonoBehaviour
     public Color diminishedColor;
 
     [ColorUsage(true, true)]
-    public Color hintColor;
+    public Color correctColor;
     [ColorUsage(true, true)]
-    public Color trackingColor;
+    public Color incorrectColor;
 }
