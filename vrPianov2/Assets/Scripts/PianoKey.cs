@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Types;
 using UnityEngine;
+using TMPro;
 
 public class PianoKey : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class PianoKey : MonoBehaviour
     private float incorrectLightFlashDuration = .1f;
     private int incorrectLightFlashAmount = 3;
 
+    public TextMeshProUGUI noteDisplay;
+
     private void Awake()
     {
         source = GetComponent<AudioSource>();
@@ -33,6 +36,7 @@ public class PianoKey : MonoBehaviour
         keyLight = GetComponentInChildren<Light>();
         startingIntensity = keyLight.intensity;        
         originalColor = GetComponent<Renderer>().material.color;
+        ShowNote(true);//TODO use handicaps
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -121,5 +125,24 @@ public class PianoKey : MonoBehaviour
         keyLight.intensity = touchLightIntensity;
         yield return new WaitForSeconds(lightIntensityDuration);
         keyLight.intensity = startingIntensity;
+    }
+
+    void ShowNote(bool showNote)
+    {
+        if(showNote)
+        {
+            noteDisplay.gameObject.SetActive(true);
+
+            string noteString = note.ToString();
+            if (noteString.Length > 1)
+            {
+                noteString = noteString[0] + "#";
+            }
+            noteDisplay.text = noteString;
+        }
+        else
+        {
+            noteDisplay.gameObject.SetActive(false);
+        }
     }
 }

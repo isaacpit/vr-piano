@@ -112,7 +112,7 @@ public class EnemyTracker : MonoBehaviour
     {
         if (currentTrackingEnemy && currentTrackingEnemy.CheckNoteToChord(note))//Correct
         {
-            if (LevelManager.Instance.currentHandicaps.showRightOrWrongOnDisplay)
+            if (LevelManager.Instance.currentHandicaps.showUpdatedChordsOnDisplay)
             {
                 noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
                 Debug.Log($"Note hit: {note} ");
@@ -120,7 +120,7 @@ public class EnemyTracker : MonoBehaviour
         }
         else//Incorrect
         {
-            if (LevelManager.Instance.currentHandicaps.showRightOrWrongOnDisplay)
+            if (LevelManager.Instance.currentHandicaps.showUpdatedChordsOnDisplay)
             {
                 Debug.Log("wrong note");
             }

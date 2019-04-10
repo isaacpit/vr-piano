@@ -25,8 +25,9 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
     void Awake()
     {
+        currentHandicaps = new Handicaps();
         currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);//Just in case something else needs it
-        AdjustHandicap();
+        AdjustHandicap(); 
     }
 
     void Update()
@@ -63,7 +64,7 @@ public class LevelManager : SimpleSingleton<LevelManager>
         }
         if (handicapLevel > 1)
         {
-            currentHandicaps.showRightOrWrongOnDisplay = true;
+            currentHandicaps.showUpdatedChordsOnDisplay = true;
         }
         if (handicapLevel > 0)//Only 1 hint
         {
