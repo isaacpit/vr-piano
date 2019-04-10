@@ -6,6 +6,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+    enum FlightMode
+    {
+        FLY_TO_PLAYER,
+        FLY_IDLE,
+        FLIGHT_MODE_COUNT
+    }
+
     [Header("Position Data")]
     public Spawner m_spawner;
     public Vector3 m_startPos;
@@ -26,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     [Header("Death FX")]
     public AudioClip deathSound;
+
+    FlightMode m_currMode = FlightMode.FLY_IDLE;
 
     // Start is called before the first frame update
     private void Awake()
@@ -50,29 +59,38 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         //InputManager.Instance.currentEnemy = this;
-        transform.position = m_startPos;
-        ChangeMaterial();
-        m_endPos = objective.transform.position;
-        // add this enemy to m_liveEnemies queue
-        EnemyManager.Instance.AddLiveEnemy(this);
-        
+
+        summonEnemy();
 
     }
 
     private void OnDisable()
     {
+        hideEnemy();
+    }
+
+    public void beginIdle()
+    {
+        m_currMode = FlightMode.FLY_IDLE;
+    }
+
+    private void summonEnemy()
+    {
+        transform.position = m_startPos;
+        ChangeMaterial();
+        m_endPos = objective.transform.position;
+        // add this enemy to m_liveEnemies queue
+        EnemyManager.Instance.AddLiveEnemy(this);
+    }
+
+    private void hideEnemy()
+    {
         // place back into spawner queue
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
         m_spawner.m_enemies.Enqueue(this.gameObject);
-
         // remove from InputManager's live queue
-        //Enemy front = 
-        EnemyManager.Instance.RemoveLiveEnemy(this);        
-        //if (front != this)
-        //{
-        //    Debug.Log("ERROR: front of queue m_liveEnemies != this object");
-        //}
+        EnemyManager.Instance.RemoveLiveEnemy(this);
     }
 
     private void ChangeMaterial()
@@ -134,7 +152,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-        //    Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
+            // TODO : activate flying animation here and place back into idle pool
         }
         gameObject.SetActive(false);
     }

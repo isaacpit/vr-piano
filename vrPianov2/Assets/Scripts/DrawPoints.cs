@@ -20,6 +20,8 @@ public class DrawPoints : MonoBehaviour
     public List<Vector3> points;
     public List<GameObject> enemies;
 
+    float noiseConstant = 0.50f;
+
     float timer;
 
 
@@ -97,6 +99,9 @@ public class DrawPoints : MonoBehaviour
                     Debug.Log("v: " + v);
                 }
                 Gizmos.DrawSphere(v, 0.01f);
+                Gizmos.color = Color.blue;
+                Vector3 dir = transform.TransformDirection(enemy.transform.forward) * 5;
+                Gizmos.DrawRay(enemy.transform.position, dir);
             }
         }
 
@@ -121,7 +126,34 @@ public class DrawPoints : MonoBehaviour
         
         if (enemy != null)
         {
-            enemy.transform.position = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u);
+
+
+            //enemy.transform.position = 
+
+
+
+            if (u < 1.0f)
+            { 
+                Vector3 pos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u);
+                Vector3 nextPos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u + 0.01f);
+                Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
+
+                // CAUTION: POSSIBLY SLOWS DOWN PERFORMANCE?
+                float noise = noiseConstant * Mathf.PerlinNoise(pos.x, pos.y);
+                nextPos.y += noise;
+                pos.y += noise;
+                enemy.transform.LookAt(nextPos, up);
+
+                //Debug.Log("u: " + u + " noise: " + noise);
+                //pos.x += noise;
+
+                enemy.transform.position = pos;
+            }
+            else
+            {
+                Debug.Log("Error: u is out of bounds");
+            }
+
         }
     }
 }
