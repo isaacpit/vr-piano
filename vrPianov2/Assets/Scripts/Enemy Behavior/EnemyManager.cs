@@ -51,7 +51,8 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     public void AddLiveEnemy(Enemy e)
     {
         m_liveEnemies.Add(e);
-        tracker.TrackEnemy(e);        
+        tracker.TrackEnemy(e);
+        
 
         //m_currentEnemy = m_liveEnemies[0];
         Debug.Log("EnemyManager | m_liveEnemies: " + m_liveEnemies.Count);

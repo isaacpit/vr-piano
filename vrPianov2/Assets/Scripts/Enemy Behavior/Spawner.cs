@@ -51,8 +51,8 @@ public class Spawner : MonoBehaviour
         // TODO : don't spawn all enemies into idle, leave some disabled in pool
         for (int i = 0; i < m_enemyPoolCount; ++i)
         {
-            GameObject obj = new GameObject();
-            obj.SetActive(false);
+            GameObject obj ;
+            //obj.SetActive(false);
             obj = Instantiate(m_pathingBox);
             obj.transform.parent = this.transform;
             obj.transform.position = transform.position;
@@ -69,21 +69,24 @@ public class Spawner : MonoBehaviour
         {
             Vector3 v = GetRandomPoint();
 
-            GameObject obj = Instantiate(m_enemy);
+            GameObject obj = m_enemy;
+            obj.SetActive(false);
 
             // make all enemies children of spawner for simplicity
-            obj.transform.parent = this.transform;
 
+            obj = Instantiate(m_enemy);
+            obj.transform.parent = this.transform;
             // set meta data of enemies
             Enemy enemyRef = obj.GetComponent<Enemy>();
             enemyRef.m_startPos = v;
             enemyRef.m_spawner = this;
             enemyRef.chord = Chord.GetRandomChord();
-            enemyRef.pathingBox = m_pathingBoxes[i].GetComponent<DrawPoints>();
+            enemyRef.pathingBox = m_pathingBoxes[i].GetComponent<IdlePath>();
 
-            m_pathingBoxes[i].GetComponent<DrawPoints>().enemy = enemyRef.gameObject;
+
             //enemyRef.m_objective = targetObjective;
             enemyRef.SetObjective(targetObjective);
+            m_pathingBoxes[i].GetComponent<IdlePath>().enemy = enemyRef.gameObject;
             //enemyRef.m
             //enemyRef.m_endPos = enemyObjective.transform.position;
             m_idleEnemies.Enqueue(obj);

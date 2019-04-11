@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     public AudioClip deathSound;
 
     [Header("Pathing Info")]
-    public DrawPoints pathingBox;
+    public IdlePath pathingBox;
 
     public FlightMode m_currMode = FlightMode.FLY_IDLE;
 
@@ -154,30 +154,30 @@ public class Enemy : MonoBehaviour
             float step = m_stepSize * Time.deltaTime;
             Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
 
-            //p[1] += Mathf.Sin(p[2]) / 20;
-            //p[0] += Mathf.Cos(p[2]) / 20;
+            p[1] += Mathf.Sin(p[2]) / 20;
+            p[0] += Mathf.Cos(p[2]) / 20;
 
             // pathing based on chord type
-            switch (chord.chordType)
-            {
-                case ChordType.Major:
-                case ChordType.NUM_CHORDS:
-                default:
-                    // swirly 
-                    p[1] += Mathf.Sin(p[2]) / 30;
-                    p[0] += Mathf.Cos(p[2]) / 30;
-                    break;
-                case ChordType.Minor:
-                    // downward descent
-                    p[1] -= Mathf.PerlinNoise(p[1], p[0]) / 20;
-                    p[0] -= Mathf.Sin(p[2]) / 20;
-                    break;
-                case ChordType.Diminished:
-                    // ??? 
-                    p[1] += Mathf.Cos(p[2]) / 20;
-                    p[0] -= Mathf.PerlinNoise(p[1], p[2]) / 20;
-                    break;
-            }
+            //switch (chord.chordType)
+            //{
+            //    case ChordType.Major:
+            //    case ChordType.NUM_CHORDS:
+            //    default:
+            //        // swirly 
+            //        p[1] += Mathf.Sin(p[2]) / 30;
+            //        p[0] += Mathf.Cos(p[2]) / 30;
+            //        break;
+            //    case ChordType.Minor:
+            //        // downward descent
+            //        p[1] -= Mathf.PerlinNoise(p[1], p[0]) / 20;
+            //        p[0] -= Mathf.Sin(p[2]) / 20;
+            //        break;
+            //    case ChordType.Diminished:
+            //        // ??? 
+            //        p[1] += Mathf.Cos(p[2]) / 20;
+            //        p[0] -= Mathf.PerlinNoise(p[1], p[2]) / 20;
+            //        break;
+            //}
 
             transform.position = p;
 
@@ -190,7 +190,7 @@ public class Enemy : MonoBehaviour
         }
         else if (m_currMode == FlightMode.FLY_IDLE)
         {
-            // handled by DrawPoints class that is associated... kinda convoluted...
+            // handled by IdlePath class that is associated... kinda convoluted...
         }
 
     }

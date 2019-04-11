@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 //using System;
 
-public class DrawPoints : MonoBehaviour
+public class IdlePath : MonoBehaviour
 {
     public GameObject box;
     public int numPoints;
     public Vector3 boxCenter;
     public Vector3 boxSize;
     public float speed = 0.05f;
+    public float buff = 10.0f;
 
     public GameObject enemy;
 
@@ -70,7 +71,7 @@ public class DrawPoints : MonoBehaviour
             }
             else
             {
-                Vector3 v = UnityEngine.Random.insideUnitSphere * boxSize[0] + boxCenter;
+                Vector3 v = UnityEngine.Random.insideUnitSphere * (boxSize[0] - buff) + boxCenter;
                 points.Insert(i, v);
             }
 
@@ -93,6 +94,7 @@ public class DrawPoints : MonoBehaviour
         return 0.5f * ((2f * p2) + (-p1 + p3) * t + (2f * p1 - 5f * p2 + 4f * p3 - p4) * Mathf.Pow(t, 2f) + (-p1 + 3f * p2 - 3f * p3 + p4) * Mathf.Pow(t, 3f));
     }
 
+    #if UNITY_EDITOR && DEBUG
     private void OnDrawGizmos()
     {
         for (int i = 0; i < points.Count; ++i)
@@ -111,7 +113,7 @@ public class DrawPoints : MonoBehaviour
                     {
                         Debug.Log("v: " + v);
                     }
-                    Gizmos.DrawSphere(v, 0.01f);
+
                     Gizmos.color = Color.blue;
                     Vector3 dir = transform.TransformDirection(enemy.transform.forward) * 5;
                     Gizmos.DrawRay(enemy.transform.position, dir);
@@ -120,8 +122,10 @@ public class DrawPoints : MonoBehaviour
         }
 
         //inDebugMode = false;
-        
+
     }
+    #endif
+
 
     // Start is called before the first frame update
     void Start()
