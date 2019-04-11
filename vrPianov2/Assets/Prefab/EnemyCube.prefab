@@ -466,15 +466,17 @@ MonoBehaviour:
   m_spawner: {fileID: 0}
   m_startPos: {x: 0, y: 5, z: 20}
   m_endPos: {x: 0, y: 5, z: -5}
-  m_stepSize: 3
+  m_stepSize: 5
   m_rotateSpeed: 1
-  objective: {fileID: 0}
+  m_objective: {fileID: 0}
   chord:
     RootNote: 0
     chordType: 0
   hasSecondNoteBeenPlayed: 0
   hasThirdNoteBeenPlayed: 0
   deathSound: {fileID: 8300000, guid: f6cb4cb969852fd4ebed18e3dacbc427, type: 3}
+  pathingBox: {fileID: 0}
+  m_currMode: 1
 --- !u!54 &8931905285549790229
 Rigidbody:
   m_ObjectHideFlags: 0

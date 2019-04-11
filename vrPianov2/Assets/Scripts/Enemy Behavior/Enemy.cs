@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    enum FlightMode
+    public enum FlightMode
     {
         FLY_TO_PLAYER,
         FLY_IDLE,
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     public Vector3 m_endPos;
     public float m_stepSize;
     public float m_rotateSpeed;
-    public GameObject objective;
+    public GameObject m_objective;
     
     [Space]
     [Header("Chord Info")]
@@ -34,7 +34,10 @@ public class Enemy : MonoBehaviour
     [Header("Death FX")]
     public AudioClip deathSound;
 
-    FlightMode m_currMode = FlightMode.FLY_IDLE;
+    [Header("Pathing Info")]
+    public DrawPoints pathingBox;
+
+    public FlightMode m_currMode = FlightMode.FLY_IDLE;
 
     // Start is called before the first frame update
     private void Awake()
@@ -47,9 +50,14 @@ public class Enemy : MonoBehaviour
         //PrintEnemy();
     }
 
+    public void SetObjective(GameObject obj)
+    {
+        m_objective = obj;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == objective)
+        if (other.gameObject == m_objective)
         {
             PoolDestroy(true);
         }
@@ -59,8 +67,7 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         //InputManager.Instance.currentEnemy = this;
-
-        summonEnemy();
+        spawnIdleEnemy();
 
     }
 
@@ -74,13 +81,27 @@ public class Enemy : MonoBehaviour
         m_currMode = FlightMode.FLY_IDLE;
     }
 
-    private void summonEnemy()
+    public void spawnLiveEnemy()
     {
+        // TODO: add an animation to target enemies that are "live"
+        m_currMode = FlightMode.FLY_TO_PLAYER;
+        //transform.position = m_startPos; 
+        //ChangeMaterial();
+        //m_endPos = m_objective.transform.position;
+        //// add this enemy to m_liveEnemies queue
+        //EnemyManager.Instance.AddLiveEnemy(this);
+        EnemyManager.Instance.AddLiveEnemy(this);
+    }
+
+    private void spawnIdleEnemy()
+    {
+        m_currMode = FlightMode.FLY_IDLE;
         transform.position = m_startPos;
         ChangeMaterial();
-        m_endPos = objective.transform.position;
+        m_endPos = m_objective.transform.position;
         // add this enemy to m_liveEnemies queue
-        EnemyManager.Instance.AddLiveEnemy(this);
+        //EnemyManager.Instance.AddLiveEnemy(this);
+        EnemyManager.Instance.AddIdleEnemy(this);
     }
 
     private void hideEnemy()
@@ -88,7 +109,7 @@ public class Enemy : MonoBehaviour
         // place back into spawner queue
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
-        m_spawner.m_enemies.Enqueue(this.gameObject);
+        m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
         EnemyManager.Instance.RemoveLiveEnemy(this);
     }
@@ -128,19 +149,50 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float step = m_stepSize * Time.deltaTime;
-        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
+        if (m_currMode == FlightMode.FLY_TO_PLAYER)
+        {
+            float step = m_stepSize * Time.deltaTime;
+            Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
 
-        p[1] += Mathf.Sin(p[2]) / 100;
-        p[0] += Mathf.Cos(p[2]) / 100;
-        transform.position = p;
+            //p[1] += Mathf.Sin(p[2]) / 20;
+            //p[0] += Mathf.Cos(p[2]) / 20;
+
+            // pathing based on chord type
+            switch (chord.chordType)
+            {
+                case ChordType.Major:
+                case ChordType.NUM_CHORDS:
+                default:
+                    // swirly 
+                    p[1] += Mathf.Sin(p[2]) / 30;
+                    p[0] += Mathf.Cos(p[2]) / 30;
+                    break;
+                case ChordType.Minor:
+                    // downward descent
+                    p[1] -= Mathf.PerlinNoise(p[1], p[0]) / 20;
+                    p[0] -= Mathf.Sin(p[2]) / 20;
+                    break;
+                case ChordType.Diminished:
+                    // ??? 
+                    p[1] += Mathf.Cos(p[2]) / 20;
+                    p[0] -= Mathf.PerlinNoise(p[1], p[2]) / 20;
+                    break;
+            }
+
+            transform.position = p;
 
 
-        // rotation towards objective
-        float rotStep = m_rotateSpeed * Time.deltaTime;
-        Vector3 targetDir = (m_endPos - transform.position).normalized;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotStep, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDir);
+            // rotation towards m_objective
+            float rotStep = m_rotateSpeed * Time.deltaTime;
+            Vector3 targetDir = (m_endPos - transform.position).normalized;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotStep, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+        }
+        else if (m_currMode == FlightMode.FLY_IDLE)
+        {
+            // handled by DrawPoints class that is associated... kinda convoluted...
+        }
+
     }
 
     public void PoolDestroy(bool isDamageToPlayer)

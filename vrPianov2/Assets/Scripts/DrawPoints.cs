@@ -15,7 +15,7 @@ public class DrawPoints : MonoBehaviour
 
     Bounds boxBounds;
 
-    bool printDebug = true;
+    bool inDebugMode = false;
 
     public List<Vector3> points;
     public List<GameObject> enemies;
@@ -36,10 +36,14 @@ public class DrawPoints : MonoBehaviour
             boxCenter = boxBounds.center;
             boxSize = boxBounds.extents;
         }
-        Debug.Log(boxBounds);
-        Debug.Log("center: " + boxCenter);
-        Debug.Log("size: " + boxSize);
-        Debug.Log("num_points: " + numPoints);
+        if (inDebugMode)
+        {
+            Debug.Log(boxBounds);
+            Debug.Log("center: " + boxCenter);
+            Debug.Log("size: " + boxSize);
+            Debug.Log("num_points: " + numPoints);
+        }
+
         points = new List<Vector3>(numPoints + 3);
         
         GenRandomPoints(numPoints + 3);
@@ -50,6 +54,9 @@ public class DrawPoints : MonoBehaviour
         //}
         
     }
+    
+
+
 
     public void GenRandomPoints(int n)
     {
@@ -68,13 +75,17 @@ public class DrawPoints : MonoBehaviour
             }
 
         }
-        
-        Debug.Log("Points: ");
-        for (int i = 0; i < points.Count; ++i)
+
+        if (inDebugMode)
         {
-            
-            Debug.Log(i + ": " + points[i]);
+            Debug.Log("Points: ");
+            for (int i = 0; i < points.Count; ++i)
+            {
+
+                Debug.Log(i + ": " + points[i]);
+            }
         }
+
     }
 
     public static Vector3 InterpolateFromCatmullRomSpline(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, float t)
@@ -89,23 +100,26 @@ public class DrawPoints : MonoBehaviour
             Gizmos.DrawSphere(points[i], 0.25f);
         }
 
-        for (int i = 0; i < points.Count - 3; ++i)
+        if (inDebugMode)
         {
-            for (float t = 0.0f; t < 1.0f; t += 0.01f)
+            for (int i = 0; i < points.Count - 3; ++i)
             {
-                Vector3 v = InterpolateFromCatmullRomSpline(points[i], points[i + 1], points[i + 2], points[i + 3], t);
-                if (printDebug)
+                for (float t = 0.0f; t < 1.0f; t += 0.01f)
                 {
-                    Debug.Log("v: " + v);
+                    Vector3 v = InterpolateFromCatmullRomSpline(points[i], points[i + 1], points[i + 2], points[i + 3], t);
+                    if (inDebugMode)
+                    {
+                        Debug.Log("v: " + v);
+                    }
+                    Gizmos.DrawSphere(v, 0.01f);
+                    Gizmos.color = Color.blue;
+                    Vector3 dir = transform.TransformDirection(enemy.transform.forward) * 5;
+                    Gizmos.DrawRay(enemy.transform.position, dir);
                 }
-                Gizmos.DrawSphere(v, 0.01f);
-                Gizmos.color = Color.blue;
-                Vector3 dir = transform.TransformDirection(enemy.transform.forward) * 5;
-                Gizmos.DrawRay(enemy.transform.position, dir);
             }
         }
 
-        printDebug = false;
+        //inDebugMode = false;
         
     }
 
@@ -127,32 +141,37 @@ public class DrawPoints : MonoBehaviour
         if (enemy != null)
         {
 
+            Enemy e = enemy.GetComponent<Enemy>();
+            if (e != null && e.m_currMode == Enemy.FlightMode.FLY_IDLE)
+            {
+                if (u < 1.0f)
+                {
+                    Vector3 pos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u);
+                    Vector3 nextPos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u + 0.01f);
+                    Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
+
+                    // CAUTION: POSSIBLY SLOWS DOWN PERFORMANCE?
+                    float noise = noiseConstant * Mathf.PerlinNoise(pos.x, pos.y);
+                    nextPos.y += noise;
+                    pos.y += noise;
+                    enemy.transform.LookAt(nextPos, up);
+
+                    //Debug.Log("u: " + u + " noise: " + noise);
+                    //pos.x += noise;
+
+                    enemy.transform.position = pos;
+                }
+                else
+                {
+                    Debug.Log("Error: u is out of bounds");
+                }
+            }
 
             //enemy.transform.position = 
 
 
 
-            if (u < 1.0f)
-            { 
-                Vector3 pos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u);
-                Vector3 nextPos = InterpolateFromCatmullRomSpline(points[k], points[k + 1], points[k + 2], points[k + 3], u + 0.01f);
-                Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
-
-                // CAUTION: POSSIBLY SLOWS DOWN PERFORMANCE?
-                float noise = noiseConstant * Mathf.PerlinNoise(pos.x, pos.y);
-                nextPos.y += noise;
-                pos.y += noise;
-                enemy.transform.LookAt(nextPos, up);
-
-                //Debug.Log("u: " + u + " noise: " + noise);
-                //pos.x += noise;
-
-                enemy.transform.position = pos;
-            }
-            else
-            {
-                Debug.Log("Error: u is out of bounds");
-            }
+            
 
         }
     }
