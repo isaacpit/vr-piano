@@ -13,7 +13,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ef2f03f34984a4ca920a2321a27a46, type: 3}
   m_Name: One
   m_EditorClassIdentifier: 
-  minEnemySpeed: 0
-  maxEnemySpeed: 0
-  weightedEnemyList: []
-  weightedMusicalNoteList: []
+  stageType: 0
+  minEnemySpeed: 50
+  maxEnemySpeed: 100
+  weightedChordList:
+  - chordType: 0
+    weight: 10
+  - chordType: 1
+    weight: 80
+  - chordType: 2
+    weight: 10
+  weightedMusicalNoteList:
+  - noteType: 0
+    weight: 10
+  - noteType: 5
+    weight: 90
+  - noteType: 0
+    weight: 10
+  totalChordsWeight: 100
+  totalNotesWeight: 110

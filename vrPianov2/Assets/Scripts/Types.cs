@@ -5,9 +5,9 @@
     public enum StageType { One, Two, Three, Four, Five}; //TODO Rename these to better fit difficulty
 
     [System.Serializable]
-    public class WeightedEnemy
+    public class WeightedChord
     {
-        public ChordType enemyType;
+        public ChordType chordType;
         public int weight;
     }
 

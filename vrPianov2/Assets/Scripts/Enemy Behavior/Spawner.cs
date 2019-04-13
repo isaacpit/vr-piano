@@ -17,8 +17,6 @@ public class Spawner : MonoBehaviour
     public GameObject m_pathingBox;
     public List<GameObject> m_pathingBoxes;
 
-
-    private Random rnd;
     private Vector3 spawnPosition;
     private GameObject targetObjective = null;
 

@@ -101,11 +101,60 @@ public class LevelManager : SimpleSingleton<LevelManager>
             if (stageObject.stageType == newStageType)
             {
                 currentStageType = newStageType;
+                if(stageObject.totalNotesWeight == 0 || stageObject.totalChordsWeight == 0)
+                {
+                    CalculateTotalWeightsForThisStageObject(stageObject);
+                }
                 return stageObject;
             }
         }
 
         Debug.LogWarning("Stage Object for " + newStageType + " StageType is not defined");
         return currentStageObject;
+    }
+
+    void CalculateTotalWeightsForThisStageObject(StageObject stageObject)
+    {
+        int totalChordsWeight = 0;
+        for (int i = 0; i < stageObject.weightedChordList.Count; i++)
+        {
+            totalChordsWeight += stageObject.weightedChordList[i].weight;
+        }
+        stageObject.totalChordsWeight = totalChordsWeight;
+
+        int totalNotesWeight = 0;
+        for (int i = 0; i < stageObject.weightedMusicalNoteList.Count; i++)
+        {
+            totalNotesWeight += stageObject.weightedMusicalNoteList[i].weight;
+        }
+        stageObject.totalNotesWeight = totalNotesWeight;
+    }
+
+    public ChordType GetRandomChordType()
+    {
+        int totalChordsWeight = Random.Range(0,currentStageObject.totalChordsWeight);
+        for (int i = 0; i < currentStageObject.weightedChordList.Count; i++)
+        {
+            totalChordsWeight -= currentStageObject.weightedChordList[i].weight;
+            if(totalChordsWeight<=0)
+            {
+                return currentStageObject.weightedChordList[i].chordType;
+            }
+        }
+        return currentStageObject.weightedChordList[0].chordType;
+    }
+
+    public MusicalNote GetRandomNote()
+    {
+        int totalNotesWeight = Random.Range(0, currentStageObject.totalNotesWeight);
+        for (int i = 0; i < currentStageObject.weightedMusicalNoteList.Count; i++)
+        {
+            totalNotesWeight -= currentStageObject.weightedMusicalNoteList[i].weight;
+            if (totalNotesWeight <= 0)
+            {
+                return currentStageObject.weightedMusicalNoteList[i].noteType;
+            }
+        }
+        return currentStageObject.weightedMusicalNoteList[0].noteType;
     }
 }

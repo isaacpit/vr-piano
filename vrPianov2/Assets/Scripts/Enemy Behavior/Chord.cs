@@ -80,9 +80,8 @@ public class Chord
 
     public static Chord GetRandomChord()
     {
-        ChordType chordType = (ChordType)UnityEngine.Random.Range(0, (int)ChordType.NUM_CHORDS);
-        MusicalNote rootNote = (MusicalNote)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(MusicalNote)).Length);
+        ChordType chordType = LevelManager.Instance.GetRandomChordType();
+        MusicalNote rootNote = LevelManager.Instance.GetRandomNote();
         return new Chord(rootNote, chordType);
-
     }
 }

@@ -14,7 +14,21 @@ MonoBehaviour:
   m_Name: Two
   m_EditorClassIdentifier: 
   stageType: 1
-  minEnemySpeed: 0
-  maxEnemySpeed: 0
-  weightedEnemyList: []
-  weightedMusicalNoteList: []
+  minEnemySpeed: 80
+  maxEnemySpeed: 100
+  weightedChordList:
+  - chordType: 0
+    weight: 30
+  - chordType: 1
+    weight: 50
+  - chordType: 2
+    weight: 40
+  weightedMusicalNoteList:
+  - noteType: 0
+    weight: 40
+  - noteType: 1
+    weight: 40
+  - noteType: 3
+    weight: 40
+  totalChordsWeight: 0
+  totalNotesWeight: 0

@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public Vector3 m_startPos;
     public Vector3 m_endPos;
     public float m_stepSize;
+    public float m_speed;
     public float m_rotateSpeed;
     public GameObject m_objective;
     
@@ -85,6 +86,7 @@ public class Enemy : MonoBehaviour
     {
         // TODO: add an animation to target enemies that are "live"
         m_currMode = FlightMode.FLY_TO_PLAYER;
+        m_speed = UnityEngine.Random.Range(LevelManager.Instance.currentStageObject.minEnemySpeed, LevelManager.Instance.currentStageObject.minEnemySpeed);
         //transform.position = m_startPos; 
         //ChangeMaterial();
         //m_endPos = m_objective.transform.position;
@@ -151,7 +153,7 @@ public class Enemy : MonoBehaviour
     {
         if (m_currMode == FlightMode.FLY_TO_PLAYER)
         {
-            float step = m_stepSize * Time.deltaTime;
+            float step = m_stepSize * Time.deltaTime * m_speed;
             Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
 
             p[1] += Mathf.Sin(p[2]) / 20;
