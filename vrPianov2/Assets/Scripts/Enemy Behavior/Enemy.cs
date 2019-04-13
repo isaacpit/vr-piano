@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Types;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class Enemy : MonoBehaviour
     public float m_speed;
     public float m_rotateSpeed;
     public GameObject m_objective;
-    
+
     [Space]
     [Header("Chord Info")]
     public Chord chord;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
     private MeshRenderer m_meshRenderer;
     //public List<Material> m_materials;
 
+    public bool hasRootNoteBeenPlayed = false;
     public bool hasSecondNoteBeenPlayed = false;
     public bool hasThirdNoteBeenPlayed = false;
 
@@ -43,7 +45,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        m_meshRenderer = GetComponent<MeshRenderer>();        
+        m_meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Start()
@@ -134,7 +136,7 @@ public class Enemy : MonoBehaviour
             case ChordType.Diminished:
                 m_meshRenderer.material.color = GameManager.Instance.colors.diminishedColor;
                 m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.diminishedColor);
-                break;            
+                break;
         }
         //m_material = m_materials[(int)chord.chordType];
         //Debug.Log("m_material: " + m_material.name);
@@ -146,7 +148,7 @@ public class Enemy : MonoBehaviour
         chord = new Chord(note, chordType);
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
@@ -203,9 +205,13 @@ public class Enemy : MonoBehaviour
         {
             //  Debug.Log("Player Hit");
             EnemyManager.Instance.PlayHurtFX();
+            LevelManager.Instance.winStreak = 0;
+            LevelManager.Instance.failStreak++;
         }
         else
         {
+            LevelManager.Instance.winStreak++;
+            LevelManager.Instance.failStreak = 0;
             // TODO : activate flying animation here and place back into idle pool
         }
         gameObject.SetActive(false);
@@ -220,14 +226,39 @@ public class Enemy : MonoBehaviour
     public bool CheckNoteToChord(MusicalNote note)
     {
         var noteHit = false;
-        if(note == chord.SecondNote)
+        if (note == chord.RootNote)
+        {
+            hasRootNoteBeenPlayed = true;
+            noteHit = true;
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.RootNote).First().EnableCorrectColor();
+            }
+        }
+        else if (note == chord.SecondNote)
         {
             hasSecondNoteBeenPlayed = true;
             noteHit = true;
-        }else if(note == chord.ThirdNote)
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.SecondNote).First().EnableCorrectColor();
+            }
+        }
+        else if (note == chord.ThirdNote)
         {
             hasThirdNoteBeenPlayed = true;
             noteHit = true;
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                GameManager.Instance.piano.keys.Where(x => x.note == chord.ThirdNote).First().EnableCorrectColor();
+            }
+        }
+        else
+        {
+            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
+            {
+                StartCoroutine(GameManager.Instance.piano.keys.Where(x => x.note == note).First().FlashIncorrectColor());
+            }
         }
         if (noteHit)
         {
@@ -239,7 +270,7 @@ public class Enemy : MonoBehaviour
 
     private void CheckForDeath()
     {
-        if(hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
+        if (hasRootNoteBeenPlayed && hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
         {
             PoolDestroy(false);
         }
