@@ -17,17 +17,19 @@ public class LevelManager : SimpleSingleton<LevelManager>
     public Handicaps currentHandicaps;
 
     [Header("Privates")]
-    StageType previousStageType;
-    int handicapLevel = 2;
-    int failStreak;//If get a win reset to 0
-    int winStreak;//If get a fail reset to 0
+    StageType previousStageType;//Allows for runtime change to take effect
+    int previousHandicapLevel = 2;
+    public int currentHandicapLevel = 2;
+    public int failStreak;//If get a win reset to 0
+    public int winStreak;//If get a fail reset to 0
 
 
     void Awake()
     {
         currentHandicaps = new Handicaps();
         currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);//Just in case something else needs it
-        AdjustHandicap(); 
+        previousHandicapLevel = currentHandicapLevel;
+        AdjustHandicap();
     }
 
     void Update()
@@ -41,32 +43,40 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
         if (failStreak >= streakAmountToChangeHandicaps)
         {
-            handicapLevel = Mathf.Clamp(handicapLevel++, 0, 5);
-            AdjustHandicap();
+            currentHandicapLevel = Mathf.Clamp(currentHandicapLevel++, 0, 5);
+            failStreak = 0;
+            winStreak = 0;
         }
         else if (winStreak >= streakAmountToChangeHandicaps)
         {
-            handicapLevel = Mathf.Clamp(handicapLevel--, 0, 5);
+            currentHandicapLevel = Mathf.Clamp(currentHandicapLevel--, 0, 5);
+            failStreak = 0;
+            winStreak = 0;
+        }
+
+        if (previousHandicapLevel != currentHandicapLevel)
+        {
             AdjustHandicap();
+            previousHandicapLevel = currentHandicapLevel;
         }
     }
 
     void AdjustHandicap()
     {
         currentHandicaps.SetAllHandicapsFalse();
-        if (handicapLevel > 3)//All hints
+        if (currentHandicapLevel > 3)//All hints
         {
             currentHandicaps.showColorOnKeysWhenHit = true;
         }
-        if (handicapLevel > 2)
+        if (currentHandicapLevel > 2)
         {
             currentHandicaps.showNotesOnKeys = true;
         }
-        if (handicapLevel > 1)
+        if (currentHandicapLevel > 1)
         {
             currentHandicaps.showUpdatedChordsOnDisplay = true;
         }
-        if (handicapLevel > 0)//Only 1 hint
+        if (currentHandicapLevel > 0)//Only 1 hint
         {
             currentHandicaps.showNotesOnDisplay = true;
         }
@@ -101,7 +111,7 @@ public class LevelManager : SimpleSingleton<LevelManager>
             if (stageObject.stageType == newStageType)
             {
                 currentStageType = newStageType;
-                if(stageObject.totalNotesWeight == 0 || stageObject.totalChordsWeight == 0)
+                if (stageObject.totalNotesWeight == 0 || stageObject.totalChordsWeight == 0)
                 {
                     CalculateTotalWeightsForThisStageObject(stageObject);
                 }
@@ -132,11 +142,11 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
     public ChordType GetRandomChordType()
     {
-        int totalChordsWeight = Random.Range(0,currentStageObject.totalChordsWeight);
+        int totalChordsWeight = Random.Range(0, currentStageObject.totalChordsWeight);
         for (int i = 0; i < currentStageObject.weightedChordList.Count; i++)
         {
             totalChordsWeight -= currentStageObject.weightedChordList[i].weight;
-            if(totalChordsWeight<=0)
+            if (totalChordsWeight <= 0)
             {
                 return currentStageObject.weightedChordList[i].chordType;
             }

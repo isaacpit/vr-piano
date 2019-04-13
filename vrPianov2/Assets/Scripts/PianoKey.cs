@@ -16,7 +16,7 @@ public class PianoKey : MonoBehaviour
     public bool soundStarted = false;
 
     private Light keyLight;
-    
+
     private Color originalColor;
 
     [SerializeField]
@@ -34,9 +34,17 @@ public class PianoKey : MonoBehaviour
         source = GetComponent<AudioSource>();
         readyToPlay = true;
         keyLight = GetComponentInChildren<Light>();
-        startingIntensity = keyLight.intensity;        
+        startingIntensity = keyLight.intensity;
         originalColor = GetComponent<Renderer>().material.color;
-        ShowNote(true);//TODO use handicaps
+        ShowNote();
+    }
+
+    void Update()//TODO Take out of Update
+    {
+        if (LevelManager.Instance.currentHandicaps.showNotesOnKeys ^ noteDisplay.gameObject.activeSelf)//XOR
+        {
+            noteDisplay.gameObject.SetActive(!noteDisplay.gameObject.activeSelf);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -107,9 +115,9 @@ public class PianoKey : MonoBehaviour
         {
             GetComponent<Renderer>().material.color = GameManager.Instance.colors.incorrectColor;
             GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.incorrectColor);
-            yield return new WaitForSeconds(incorrectLightFlashDuration); 
+            yield return new WaitForSeconds(incorrectLightFlashDuration);
         }
-
+        RestoreKeyColor();
     }
 
     public void RestoreKeyColor()
@@ -117,7 +125,6 @@ public class PianoKey : MonoBehaviour
         keyLight.intensity = startingIntensity;
         GetComponent<Renderer>().material.color = originalColor;
         GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color());
-
     }
 
     IEnumerator ChangeLightIntensityOnTouch()
@@ -127,22 +134,15 @@ public class PianoKey : MonoBehaviour
         keyLight.intensity = startingIntensity;
     }
 
-    void ShowNote(bool showNote)
+    void ShowNote()
     {
-        if(showNote)
-        {
-            noteDisplay.gameObject.SetActive(true);
+        noteDisplay.gameObject.SetActive(true);
 
-            string noteString = note.ToString();
-            if (noteString.Length > 1)
-            {
-                noteString = noteString[0] + "#";
-            }
-            noteDisplay.text = noteString;
-        }
-        else
+        string noteString = note.ToString();
+        if (noteString.Length > 1)
         {
-            noteDisplay.gameObject.SetActive(false);
+            noteString = noteString[0] + "#";
         }
+        noteDisplay.text = noteString;
     }
 }
