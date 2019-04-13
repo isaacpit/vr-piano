@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Types;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+
+    public enum FlightMode
+    {
+        FLY_TO_PLAYER,
+        FLY_IDLE,
+        FLIGHT_MODE_COUNT
+    }
 
     [Header("Position Data")]
     public Spawner m_spawner;
@@ -13,8 +19,8 @@ public class Enemy : MonoBehaviour
     public Vector3 m_endPos;
     public float m_stepSize;
     public float m_rotateSpeed;
-    public GameObject objective;
-
+    public GameObject m_objective;
+    
     [Space]
     [Header("Chord Info")]
     public Chord chord;
@@ -22,17 +28,21 @@ public class Enemy : MonoBehaviour
     private MeshRenderer m_meshRenderer;
     //public List<Material> m_materials;
 
-    public bool hasRootNoteBeenPlayed = false;
     public bool hasSecondNoteBeenPlayed = false;
     public bool hasThirdNoteBeenPlayed = false;
 
     [Header("Death FX")]
     public AudioClip deathSound;
 
+    [Header("Pathing Info")]
+    public IdlePath pathingBox;
+
+    public FlightMode m_currMode = FlightMode.FLY_IDLE;
+
     // Start is called before the first frame update
     private void Awake()
     {
-        m_meshRenderer = GetComponent<MeshRenderer>();
+        m_meshRenderer = GetComponent<MeshRenderer>();        
     }
 
     void Start()
@@ -40,9 +50,14 @@ public class Enemy : MonoBehaviour
         //PrintEnemy();
     }
 
+    public void SetObjective(GameObject obj)
+    {
+        m_objective = obj;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == objective)
+        if (other.gameObject == m_objective)
         {
             PoolDestroy(true);
         }
@@ -52,30 +67,51 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         //InputManager.Instance.currentEnemy = this;
-        transform.position = m_startPos;
-        ChangeMaterial();
-        m_endPos = objective.transform.position;
-        // add this enemy to m_liveEnemies queue
-        EnemyManager.Instance.AddLiveEnemy(this);
-
+        spawnIdleEnemy();
 
     }
 
     private void OnDisable()
     {
+        hideEnemy();
+    }
+
+    public void beginIdle()
+    {
+        m_currMode = FlightMode.FLY_IDLE;
+    }
+
+    public void spawnLiveEnemy()
+    {
+        // TODO: add an animation to target enemies that are "live"
+        m_currMode = FlightMode.FLY_TO_PLAYER;
+        //transform.position = m_startPos; 
+        //ChangeMaterial();
+        //m_endPos = m_objective.transform.position;
+        //// add this enemy to m_liveEnemies queue
+        //EnemyManager.Instance.AddLiveEnemy(this);
+        EnemyManager.Instance.AddLiveEnemy(this);
+    }
+
+    private void spawnIdleEnemy()
+    {
+        m_currMode = FlightMode.FLY_IDLE;
+        transform.position = m_startPos;
+        ChangeMaterial();
+        m_endPos = m_objective.transform.position;
+        // add this enemy to m_liveEnemies queue
+        //EnemyManager.Instance.AddLiveEnemy(this);
+        EnemyManager.Instance.AddIdleEnemy(this);
+    }
+
+    private void hideEnemy()
+    {
         // place back into spawner queue
-        hasRootNoteBeenPlayed = false;
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
-        m_spawner.m_enemies.Enqueue(this.gameObject);
-
+        m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
-        //Enemy front = 
         EnemyManager.Instance.RemoveLiveEnemy(this);
-        //if (front != this)
-        //{
-        //    Debug.Log("ERROR: front of queue m_liveEnemies != this object");
-        //}
     }
 
     private void ChangeMaterial()
@@ -96,7 +132,7 @@ public class Enemy : MonoBehaviour
             case ChordType.Diminished:
                 m_meshRenderer.material.color = GameManager.Instance.colors.diminishedColor;
                 m_meshRenderer.material.SetColor("_EmissionColor", GameManager.Instance.colors.diminishedColor);
-                break;
+                break;            
         }
         //m_material = m_materials[(int)chord.chordType];
         //Debug.Log("m_material: " + m_material.name);
@@ -108,24 +144,55 @@ public class Enemy : MonoBehaviour
         chord = new Chord(note, chordType);
     }
 
-
+    
 
     // Update is called once per frame
     void Update()
     {
-        float step = m_stepSize * Time.deltaTime;
-        Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
+        if (m_currMode == FlightMode.FLY_TO_PLAYER)
+        {
+            float step = m_stepSize * Time.deltaTime;
+            Vector3 p = Vector3.MoveTowards(transform.position, m_endPos, step);
 
-        p[1] += Mathf.Sin(p[2]) / 100;
-        p[0] += Mathf.Cos(p[2]) / 100;
-        transform.position = p;
+            p[1] += Mathf.Sin(p[2]) / 20;
+            p[0] += Mathf.Cos(p[2]) / 20;
+
+            // pathing based on chord type
+            //switch (chord.chordType)
+            //{
+            //    case ChordType.Major:
+            //    case ChordType.NUM_CHORDS:
+            //    default:
+            //        // swirly 
+            //        p[1] += Mathf.Sin(p[2]) / 30;
+            //        p[0] += Mathf.Cos(p[2]) / 30;
+            //        break;
+            //    case ChordType.Minor:
+            //        // downward descent
+            //        p[1] -= Mathf.PerlinNoise(p[1], p[0]) / 20;
+            //        p[0] -= Mathf.Sin(p[2]) / 20;
+            //        break;
+            //    case ChordType.Diminished:
+            //        // ??? 
+            //        p[1] += Mathf.Cos(p[2]) / 20;
+            //        p[0] -= Mathf.PerlinNoise(p[1], p[2]) / 20;
+            //        break;
+            //}
+
+            transform.position = p;
 
 
-        // rotation towards objective
-        float rotStep = m_rotateSpeed * Time.deltaTime;
-        Vector3 targetDir = (m_endPos - transform.position).normalized;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotStep, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDir);
+            // rotation towards m_objective
+            float rotStep = m_rotateSpeed * Time.deltaTime;
+            Vector3 targetDir = (m_endPos - transform.position).normalized;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotStep, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+        }
+        else if (m_currMode == FlightMode.FLY_IDLE)
+        {
+            // handled by IdlePath class that is associated... kinda convoluted...
+        }
+
     }
 
     public void PoolDestroy(bool isDamageToPlayer)
@@ -137,7 +204,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            //    Debug.Log($"Enemy destroyed by playing chord: {chord.ToString()}");
+            // TODO : activate flying animation here and place back into idle pool
         }
         gameObject.SetActive(false);
     }
@@ -151,39 +218,14 @@ public class Enemy : MonoBehaviour
     public bool CheckNoteToChord(MusicalNote note)
     {
         var noteHit = false;
-        if(note == chord.RootNote)
-        {
-            hasRootNoteBeenPlayed = true;
-            noteHit = true;
-            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
-            {
-                GameManager.Instance.piano.keys.Where(x => x.note == chord.RootNote).First().EnableCorrectColor();
-            }
-        }
-        else if (note == chord.SecondNote)
+        if(note == chord.SecondNote)
         {
             hasSecondNoteBeenPlayed = true;
             noteHit = true;
-            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
-            {
-                GameManager.Instance.piano.keys.Where(x => x.note == chord.SecondNote).First().EnableCorrectColor();
-            }
-        }
-        else if (note == chord.ThirdNote)
+        }else if(note == chord.ThirdNote)
         {
             hasThirdNoteBeenPlayed = true;
             noteHit = true;
-            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
-            {
-                GameManager.Instance.piano.keys.Where(x => x.note == chord.ThirdNote).First().EnableCorrectColor();
-            }
-        }
-        else
-        {
-            if (LevelManager.Instance.currentHandicaps.showColorOnKeysWhenHit)
-            {
-                StartCoroutine(GameManager.Instance.piano.keys.Where(x => x.note == note).First().FlashIncorrectColor());
-            }
         }
         if (noteHit)
         {
@@ -195,7 +237,7 @@ public class Enemy : MonoBehaviour
 
     private void CheckForDeath()
     {
-        if (hasRootNoteBeenPlayed && hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
+        if(hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
         {
             PoolDestroy(false);
         }

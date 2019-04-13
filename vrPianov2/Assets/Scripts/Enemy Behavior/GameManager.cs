@@ -40,7 +40,7 @@ public class GameManager : SimpleSingleton<GameManager>
         yield return new WaitForSeconds(1f);
         if (!readyToSpawn)
             yield break;
-        EnemyManager.Instance.SpawnEnemy();
+        EnemyManager.Instance.SpawnLiveEnemy();
     }
 
     public void StopSpawning()

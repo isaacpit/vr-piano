@@ -12,6 +12,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     public int m_spawnerIndex;
 
     public List<Enemy> m_liveEnemies;
+    public List<Enemy> m_idleEnemies;
     public Enemy m_currentEnemy;
 
     [SerializeField]
@@ -33,17 +34,36 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     private void Awake()
     {
         m_liveEnemies = new List<Enemy>();
+        m_idleEnemies = new List<Enemy>();
         tracker = GetComponent<EnemyTracker>();
         defaultLightColor = cockpitLights[0].color;
+        for (int i = 0; i < m_spawners.Count; ++i)
+        {
+            m_spawners.ElementAt(i).SetObjective(targetObjective);
+        }
+    }
+
+    private void Start()
+    {
+
     }
 
     public void AddLiveEnemy(Enemy e)
     {
         m_liveEnemies.Add(e);
-        tracker.TrackEnemy(e);        
+        tracker.TrackEnemy(e);
+        
 
         //m_currentEnemy = m_liveEnemies[0];
-        Debug.Log("m_liveEnemies: " + m_liveEnemies.Count);
+        Debug.Log("EnemyManager | m_liveEnemies: " + m_liveEnemies.Count);
+    }
+
+    public void AddIdleEnemy(Enemy e)
+    {
+        m_idleEnemies.Add(e);
+
+        Debug.Log("EnemyManager | m_idleEnemies: " + m_idleEnemies.Count);
+
     }
 
     public void RemoveLiveEnemy(Enemy e)
@@ -105,14 +125,14 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //}
     }
 
-    public void SpawnEnemy()
+    public void SpawnLiveEnemy()
     {
         m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
         if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
         {
             if (m_spawners[m_spawnerIndex] != null)
             {               
-                m_spawners[m_spawnerIndex].SpawnEnemy(targetObjective);
+                m_spawners[m_spawnerIndex].SpawnLiveEnemy(targetObjective);
             }
             else
             {
