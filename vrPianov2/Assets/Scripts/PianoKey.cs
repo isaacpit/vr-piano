@@ -24,10 +24,10 @@ public class PianoKey : MonoBehaviour
     [SerializeField]
     private float lightIntensityDuration = .5f;
     private float startingIntensity;
-    private float incorrectLightFlashDuration = .1f;
-    private int incorrectLightFlashAmount = 3;
+    private float incorrectLightFlashDuration = 1f;
 
     public TextMeshProUGUI noteDisplay;
+    private bool isFlashing = false;
 
     private void Awake()
     {
@@ -111,13 +111,15 @@ public class PianoKey : MonoBehaviour
 
     public IEnumerator FlashIncorrectColor()
     {
-        for (int i = 0; i < incorrectLightFlashAmount; i++)
+        if (!isFlashing)
         {
+            isFlashing = true;
             GetComponent<Renderer>().material.color = GameManager.Instance.colors.incorrectColor;
             GetComponent<Renderer>().material.SetColor("_EmissionColor", GameManager.Instance.colors.incorrectColor);
             yield return new WaitForSeconds(incorrectLightFlashDuration);
+            RestoreKeyColor();
+            isFlashing = false;
         }
-        RestoreKeyColor();
     }
 
     public void RestoreKeyColor()

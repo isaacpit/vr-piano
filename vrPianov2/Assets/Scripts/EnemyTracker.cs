@@ -97,15 +97,20 @@ public class EnemyTracker : MonoBehaviour
 
     private void UpdateMonitors()
     {
+        trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
+
         if (LevelManager.Instance.currentHandicaps.showNotesOnDisplay)
         {
-            trackingMonitor.PrintTrackingToScreen(currentTrackingEnemy.chord.ToString());
             noteMonitor.UpdateNoteMonitor(currentTrackingEnemy);
         }
         else
         {
-            //TODO Show blank or have stages of showing
+            noteMonitor.UpdateNoteMonitor(null);
         }
+        //else
+        //{
+        //    //TODO Show blank or have stages of showing
+        //}
     }
 
     public void CheckNoteToEnemy(MusicalNote note)
