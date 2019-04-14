@@ -35,6 +35,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_HeadsetOnHead;
         
+        private static SteamVR_Action_Vector2 p_default_ModAndPitch;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Vector2 p_platformer_Move;
@@ -50,6 +52,12 @@ namespace Valve.VR
         private static SteamVR_Action_Boolean p_buggy_Reset;
         
         private static SteamVR_Action_Pose p_mixedreality_ExternalCamera;
+        
+        private static SteamVR_Action_Pose p_pianoController_Pose;
+        
+        private static SteamVR_Action_Vector2 p_pianoController_ModAndPitch;
+        
+        private static SteamVR_Action_Vibration p_pianoController_Haptic;
         
         public static SteamVR_Action_Boolean default_InteractUI
         {
@@ -123,6 +131,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Vector2 default_ModAndPitch
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_ModAndPitch.GetCopy<SteamVR_Action_Vector2>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -187,6 +203,30 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Pose pianoController_Pose
+        {
+            get
+            {
+                return SteamVR_Actions.p_pianoController_Pose.GetCopy<SteamVR_Action_Pose>();
+            }
+        }
+        
+        public static SteamVR_Action_Vector2 pianoController_ModAndPitch
+        {
+            get
+            {
+                return SteamVR_Actions.p_pianoController_ModAndPitch.GetCopy<SteamVR_Action_Vector2>();
+            }
+        }
+        
+        public static SteamVR_Action_Vibration pianoController_Haptic
+        {
+            get
+            {
+                return SteamVR_Actions.p_pianoController_Haptic.GetCopy<SteamVR_Action_Vibration>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -199,6 +239,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_SkeletonRightHand,
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
+                    SteamVR_Actions.default_ModAndPitch,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -206,7 +247,10 @@ namespace Valve.VR
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
-                    SteamVR_Actions.mixedreality_ExternalCamera};
+                    SteamVR_Actions.mixedreality_ExternalCamera,
+                    SteamVR_Actions.pianoController_Pose,
+                    SteamVR_Actions.pianoController_ModAndPitch,
+                    SteamVR_Actions.pianoController_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -217,20 +261,26 @@ namespace Valve.VR
                     SteamVR_Actions.default_SkeletonRightHand,
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
+                    SteamVR_Actions.default_ModAndPitch,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
-                    SteamVR_Actions.mixedreality_ExternalCamera};
+                    SteamVR_Actions.mixedreality_ExternalCamera,
+                    SteamVR_Actions.pianoController_Pose,
+                    SteamVR_Actions.pianoController_ModAndPitch};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
-                    SteamVR_Actions.default_Haptic};
+                    SteamVR_Actions.default_Haptic,
+                    SteamVR_Actions.pianoController_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
-                    SteamVR_Actions.default_Haptic};
+                    SteamVR_Actions.default_Haptic,
+                    SteamVR_Actions.pianoController_Haptic};
             Valve.VR.SteamVR_Input.actionsPose = new Valve.VR.SteamVR_Action_Pose[] {
                     SteamVR_Actions.default_Pose,
-                    SteamVR_Actions.mixedreality_ExternalCamera};
+                    SteamVR_Actions.mixedreality_ExternalCamera,
+                    SteamVR_Actions.pianoController_Pose};
             Valve.VR.SteamVR_Input.actionsBoolean = new Valve.VR.SteamVR_Action_Boolean[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -244,8 +294,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[] {
+                    SteamVR_Actions.default_ModAndPitch,
                     SteamVR_Actions.platformer_Move,
-                    SteamVR_Actions.buggy_Steering};
+                    SteamVR_Actions.buggy_Steering,
+                    SteamVR_Actions.pianoController_ModAndPitch};
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
             Valve.VR.SteamVR_Input.actionsSkeleton = new Valve.VR.SteamVR_Action_Skeleton[] {
                     SteamVR_Actions.default_SkeletonLeftHand,
@@ -257,12 +309,14 @@ namespace Valve.VR
                     SteamVR_Actions.default_GrabGrip,
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
+                    SteamVR_Actions.default_ModAndPitch,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
                     SteamVR_Actions.buggy_Throttle,
                     SteamVR_Actions.buggy_Brake,
-                    SteamVR_Actions.buggy_Reset};
+                    SteamVR_Actions.buggy_Reset,
+                    SteamVR_Actions.pianoController_ModAndPitch};
         }
         
         private static void PreInitActions()
@@ -276,6 +330,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_SkeletonRightHand = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/default/in/SkeletonRightHand")));
             SteamVR_Actions.p_default_Squeeze = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/default/in/Squeeze")));
             SteamVR_Actions.p_default_HeadsetOnHead = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/HeadsetOnHead")));
+            SteamVR_Actions.p_default_ModAndPitch = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/default/in/ModAndPitch")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));
@@ -284,6 +339,9 @@ namespace Valve.VR
             SteamVR_Actions.p_buggy_Brake = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/buggy/in/Brake")));
             SteamVR_Actions.p_buggy_Reset = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/buggy/in/Reset")));
             SteamVR_Actions.p_mixedreality_ExternalCamera = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/mixedreality/in/ExternalCamera")));
+            SteamVR_Actions.p_pianoController_Pose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/PianoController/in/Pose")));
+            SteamVR_Actions.p_pianoController_ModAndPitch = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/PianoController/in/ModAndPitch")));
+            SteamVR_Actions.p_pianoController_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/PianoController/out/Haptic")));
         }
     }
 }

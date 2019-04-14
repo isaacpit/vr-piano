@@ -41,6 +41,10 @@
       "requirement": "optional"
     },
     {
+      "name": "/actions/default/in/ModAndPitch",
+      "type": "vector2"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -72,6 +76,20 @@
       "name": "/actions/mixedreality/in/ExternalCamera",
       "type": "pose",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/PianoController/in/Pose",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/PianoController/in/ModAndPitch",
+      "type": "vector2",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/PianoController/out/Haptic",
+      "type": "vibration",
+      "requirement": "suggested"
     }
   ],
   "action_sets": [
@@ -89,6 +107,10 @@
     },
     {
       "name": "/actions/mixedreality",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/PianoController",
       "usage": "single"
     }
   ],
