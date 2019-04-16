@@ -44,8 +44,10 @@ public class EnemyTracker : MonoBehaviour
     {
         StopTracking();
         currentTrackingEnemy = e;
+        currentTrackingEnemy.GetComponent<EnemyReticle>().AttachReticle();
         UpdateMonitors();
         PlayTrackingSound();
+        
         //TurnOnTrackingAndHintLights();
 
     }
@@ -85,6 +87,8 @@ public class EnemyTracker : MonoBehaviour
         audioSource.Stop();
         currentTrackingEnemy = null;
         RestoreKeyLights();
+
+        
     }
 
     private void RestoreKeyLights()

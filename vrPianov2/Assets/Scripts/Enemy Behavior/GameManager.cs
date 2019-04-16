@@ -9,6 +9,9 @@ public class GameManager : SimpleSingleton<GameManager>
     public Piano piano;
     public CommonColors colors;
 
+    public float m_SpawnWaveWait = 1.0f;
+
+
     private void Awake()
     {
         if (!piano)
@@ -21,6 +24,43 @@ public class GameManager : SimpleSingleton<GameManager>
     private void Start()
     {
         StartSpawning();
+    }
+
+    IEnumerator SpawnEnemyWave()
+    {
+        //Debug.Log(3);
+        //EnemyManager.Instance.tracker.trackingMonitor.PrintToScreen("3");
+        //yield return new WaitForSeconds(1f);
+        //if (!readyToSpawn)
+        //    yield break;
+        //Debug.Log(2);
+        //EnemyManager.Instance.tracker.trackingMonitor.PrintToScreen("2");
+        //yield return new WaitForSeconds(1f);
+        //if (!readyToSpawn)
+        //    yield break;
+        //Debug.Log(1);
+        //EnemyManager.Instance.tracker.trackingMonitor.PrintToScreen("1");
+        //yield return new WaitForSeconds(1f);
+        //if (!readyToSpawn)
+        //    yield break;
+        //EnemyManager.Instance.SpawnLiveEnemy();
+
+
+        //while (EnemyManager.Instance.m_idleEnemies.Count > 0)
+        //{
+
+        //    if (!readyToSpawn)
+        //        yield break;
+        //    EnemyManager.Instance.SpawnLiveEnemy();
+        //    yield return new WaitForSeconds(m_SpawnWaveWait);
+
+        //}
+        //yield return new WaitForSeconds(m_SpawnWaveWait);
+        //if (!readyToSpawn)
+        //    yield break;
+        yield return new WaitForSeconds(m_SpawnWaveWait);
+        EnemyManager.Instance.SpawnLiveEnemy();
+
     }
 
     IEnumerator WaitToSpawnEnemy()
@@ -41,6 +81,7 @@ public class GameManager : SimpleSingleton<GameManager>
         if (!readyToSpawn)
             yield break;
         EnemyManager.Instance.SpawnLiveEnemy();
+
     }
 
     public void StopSpawning()
@@ -58,12 +99,31 @@ public class GameManager : SimpleSingleton<GameManager>
     public void StartSpawning()
     {
         readyToSpawn = true;
-        NextEnemy();
+        FirstEnemy();
+    }
+
+    public void FirstEnemy()
+    {
+        // old
+        //if(readyToSpawn)
+        //    StartCoroutine(WaitToSpawnEnemy());
+
+        if (readyToSpawn)
+            StartCoroutine(WaitToSpawnEnemy());
+    }
+
+    public void CheckGameState()
+    {
+        Debug.Log("checking game state...");
+        if (EnemyManager.Instance.m_liveEnemies.Count < 1 && EnemyManager.Instance.m_idleEnemies.Count < 1)
+        {
+            Debug.Log("GAME OVER");
+        }
     }
 
     public void NextEnemy()
     {
-        if(readyToSpawn)
-            StartCoroutine(WaitToSpawnEnemy());
+        if (readyToSpawn)
+            StartCoroutine(SpawnEnemyWave());
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 764391649667618427}
   - component: {fileID: 3716777658492888770}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 8931905285549790225}
   - component: {fileID: 8931905285549790229}
   - component: {fileID: 2406815478485769048}
+  - component: {fileID: 2966555432344161997}
   m_Layer: 0
   m_Name: EnemyCube
   m_TagString: Untagged
@@ -545,11 +546,15 @@ MonoBehaviour:
   m_startPos: {x: 0, y: 5, z: 20}
   m_endPos: {x: 0, y: 5, z: -5}
   m_stepSize: 5
+  m_speed: 0
   m_rotateSpeed: 1
   m_objective: {fileID: 0}
+  m_destroyCollider: {fileID: 0}
+  m_spawnNextEnemyCollider: {fileID: 0}
   chord:
     RootNote: 0
     chordType: 0
+  hasRootNoteBeenPlayed: 0
   hasSecondNoteBeenPlayed: 0
   hasThirdNoteBeenPlayed: 0
   deathSound: {fileID: 8300000, guid: f6cb4cb969852fd4ebed18e3dacbc427, type: 3}
@@ -667,3 +672,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2966555432344161997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931905285549790227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f2645d4c6831d3c47b457f3e235e7433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reticle: {fileID: 2782595867316724190}
+  objective: {fileID: 0}
+  reticleSpeedLimiter: 200

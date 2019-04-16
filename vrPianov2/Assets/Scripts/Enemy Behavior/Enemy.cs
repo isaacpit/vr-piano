@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     public float m_speed;
     public float m_rotateSpeed;
     public GameObject m_objective;
+    public GameObject m_destroyCollider;
+    public GameObject m_spawnNextEnemyCollider;
 
     [Space]
     [Header("Chord Info")]
@@ -53,18 +55,27 @@ public class Enemy : MonoBehaviour
         //PrintEnemy();
     }
 
-    public void SetObjective(GameObject obj)
+    public void SetObjective(GameObject obj, GameObject destCollider)
     {
         m_objective = obj;
+        m_destroyCollider = destCollider;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == m_objective)
+        if (other.gameObject == m_destroyCollider)
         {
             PoolDestroy(true);
         }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject == m_spawnNextEnemyCollider)
+        {
+            Debug.Log("Spawning next enemy...");
+            GameManager.Instance.NextEnemy();
+        }
     }
 
     private void OnEnable()
@@ -117,6 +128,7 @@ public class Enemy : MonoBehaviour
         m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
         EnemyManager.Instance.RemoveLiveEnemy(this);
+        GameManager.Instance.CheckGameState();
     }
 
     private void ChangeMaterial()
@@ -148,8 +160,6 @@ public class Enemy : MonoBehaviour
     {
         chord = new Chord(note, chordType);
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -202,6 +212,7 @@ public class Enemy : MonoBehaviour
 
     public void PoolDestroy(bool isDamageToPlayer)
     {
+        
         if (isDamageToPlayer)
         {
             //  Debug.Log("Player Hit");
@@ -215,7 +226,9 @@ public class Enemy : MonoBehaviour
             LevelManager.Instance.failStreak = 0;
             // TODO : activate flying animation here and place back into idle pool
         }
+        GetComponent<EnemyReticle>().RemoveReticle();
         gameObject.SetActive(false);
+
     }
 
     public void PrintEnemy()

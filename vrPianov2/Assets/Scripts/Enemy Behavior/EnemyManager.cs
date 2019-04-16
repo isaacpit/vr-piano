@@ -17,6 +17,8 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     [SerializeField]
     private GameObject targetObjective;
+    [SerializeField]
+    private GameObject destroyCollider;
 
     public EnemyTracker tracker;
 
@@ -39,7 +41,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         defaultLightColor = cockpitLights[0].color;
         for (int i = 0; i < m_spawners.Count; ++i)
         {
-            m_spawners.ElementAt(i).SetObjective(targetObjective);
+            m_spawners.ElementAt(i).SetObjective(targetObjective, destroyCollider);
         }
     }
 
@@ -48,10 +50,28 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     }
 
+    public void TrackNextEnemy()
+    {
+        if (m_liveEnemies.Count > 0)
+        {
+            
+            tracker.TrackEnemy(m_liveEnemies.ElementAt(0));
+        }
+    }
+
     public void AddLiveEnemy(Enemy e)
     {
         m_liveEnemies.Add(e);
-        tracker.TrackEnemy(e);
+        TrackNextEnemy();
+        //if (m_liveEnemies.Count == 1 && m_liveEnemies.ElementAt(0) == e)
+        //{
+        //    tracker.TrackEnemy(e);
+        //}
+        //else
+        //{
+        //    Debug.Log("Adding idle enemy, but currently tracking another live enemy...");
+        //}
+        
         
 
         //m_currentEnemy = m_liveEnemies[0];
@@ -71,9 +91,10 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         e.OnRemoved();
         m_liveEnemies.Remove(e);
         tracker.StopTracking();
+        TrackNextEnemy();
 
         // TODO: REPLACE WITH DIFFERENT MECHANIC
-        GameManager.Instance.NextEnemy();
+        //GameManager.Instance.Spawn();
 
         //Enemy front = m_liveEnemies[0];
         //if (m_liveEnemies.Count > 0)
@@ -135,16 +156,17 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     {
         if (m_idleEnemies.Count > 0)
         {
-            m_idleEnemies.ElementAt(0).m_spawner.SpawnLiveEnemy(targetObjective);
+            int idx = UnityEngine.Random.Range(0, m_idleEnemies.Count);
+            m_idleEnemies.ElementAt(idx).m_spawner.SpawnLiveEnemy(targetObjective);
         }
-        else if (m_idleEnemies.Count < 1 && m_liveEnemies.Count > 0)
-        {
-            Debug.Log("Still some enemies coming at the player...");
-        }
-        else
-        {
-            Debug.Log("GAME OVER, NO ENEMIES LEFT");
-        }
+        //else if (m_idleEnemies.Count < 1 && m_liveEnemies.Count > 0)
+        //{
+        //    Debug.Log("Still some enemies coming at the player...");
+        //}
+        //else
+        //{
+        //    Debug.Log("GAME OVER, NO ENEMIES LEFT");
+        //}
         //m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
         //if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
         //{

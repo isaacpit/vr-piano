@@ -16,9 +16,11 @@ public class Spawner : MonoBehaviour
     public int m_enemyIdleCount;
     public GameObject m_pathingBox;
     public List<GameObject> m_pathingBoxes;
+    public GameObject m_nextEnemyCheckpoint;
 
     private Vector3 spawnPosition;
     private GameObject targetObjective = null;
+    private GameObject destroyCollider = null;
 
     private void Awake()
     {
@@ -33,9 +35,10 @@ public class Spawner : MonoBehaviour
 
     }
 
-    public void SetObjective(GameObject obj)
+    public void SetObjective(GameObject obj, GameObject destCol)
     {
         targetObjective = obj;
+        destroyCollider = destCol;
     }
 
     void createPool()
@@ -78,12 +81,21 @@ public class Spawner : MonoBehaviour
             Enemy enemyRef = obj.GetComponent<Enemy>();
             enemyRef.m_startPos = v;
             enemyRef.m_spawner = this;
+            if (m_nextEnemyCheckpoint == null)
+            {
+                Debug.Log("No checkpoint to spawn next enemy...");
+            }
+            else
+            {
+                enemyRef.m_spawnNextEnemyCollider = m_nextEnemyCheckpoint;
+            }
+            
             enemyRef.chord = Chord.GetRandomChord();
             enemyRef.pathingBox = m_pathingBoxes[i].GetComponent<IdlePath>();
 
 
             //enemyRef.m_objective = targetObjective;
-            enemyRef.SetObjective(targetObjective);
+            enemyRef.SetObjective(targetObjective, destroyCollider);
             m_pathingBoxes[i].GetComponent<IdlePath>().enemy = enemyRef.gameObject;
             //enemyRef.m
             //enemyRef.m_endPos = enemyObjective.transform.position;
