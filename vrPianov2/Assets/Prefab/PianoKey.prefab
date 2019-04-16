@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 1165319039}
   - component: {fileID: 1165319038}
   - component: {fileID: 1165319040}
-  - component: {fileID: 5460264157686100737}
   m_Layer: 0
   m_Name: KeyAudio/DistanceReader
   m_TagString: Untagged
@@ -201,23 +200,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5460264157686100737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1165319036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: 8540beaf0353d494d9a0270ea59045c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  playTolerance: 0.9
-  soundStarted: 0
-  physicalKey: {fileID: 0}
 --- !u!1 &5418425129611213725
 GameObject:
   m_ObjectHideFlags: 0

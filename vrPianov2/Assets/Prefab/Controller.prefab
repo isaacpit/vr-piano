@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45165465}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.0193, z: -0.0484}
+  m_LocalPosition: {x: -0, y: 0.0133, z: -0.0484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1995498775}
@@ -224,7 +224,7 @@ ConstantForce:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1805906209}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Force: {x: 0, y: 0, z: 0}
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0.5, y: 0.5, z: 0.5}
@@ -255,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1995498774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.008, z: 0}
   m_LocalScale: {x: 0.0042250226, y: 0.0063613015, z: 0.0042250226}
   m_Children:
   - {fileID: 1735521703}
@@ -926,6 +926,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694f890466f39904496c551691c9fce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereToRotate: {fileID: 1805906210}
+  joystick: {fileID: 45165466}
+  sphereRotateSpeed: 750
+  joystickMaxAngle: 60
 --- !u!1 &4915411933550804593
 GameObject:
   m_ObjectHideFlags: 0
