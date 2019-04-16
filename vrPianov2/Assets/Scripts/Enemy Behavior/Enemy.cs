@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == m_destroyCollider)
+        if (other.gameObject == m_destroyCollider || other.gameObject == m_objective)
         {
             PoolDestroy(true);
         }
