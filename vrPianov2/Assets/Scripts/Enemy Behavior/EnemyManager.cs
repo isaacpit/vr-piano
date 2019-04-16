@@ -88,6 +88,12 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //return front;
     } 
 
+    public void RemoveIdleEnemy(Enemy e)
+    {
+        m_idleEnemies.Remove(e);
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -127,22 +133,34 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     public void SpawnLiveEnemy()
     {
-        m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
-        if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
+        if (m_idleEnemies.Count > 0)
         {
-            if (m_spawners[m_spawnerIndex] != null)
-            {               
-                m_spawners[m_spawnerIndex].SpawnLiveEnemy(targetObjective);
-            }
-            else
-            {
-                Debug.LogError("Missing spawners");
-            }
+            m_idleEnemies.ElementAt(0).m_spawner.SpawnLiveEnemy(targetObjective);
+        }
+        else if (m_idleEnemies.Count < 1 && m_liveEnemies.Count > 0)
+        {
+            Debug.Log("Still some enemies coming at the player...");
         }
         else
         {
-            Debug.LogError("Spawner index out of bounds");
+            Debug.Log("GAME OVER, NO ENEMIES LEFT");
         }
+        //m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
+        //if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
+        //{
+        //    if (m_spawners[m_spawnerIndex] != null)
+        //    {               
+        //        m_spawners[m_spawnerIndex].SpawnLiveEnemy(targetObjective);
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("Missing spawners");
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.LogError("Spawner index out of bounds");
+        //}
     }
 
     public void PlayExplosionFX(Transform location, int particleCount)

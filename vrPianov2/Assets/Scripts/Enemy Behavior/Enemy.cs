@@ -95,6 +95,7 @@ public class Enemy : MonoBehaviour
         //// add this enemy to m_liveEnemies queue
         //EnemyManager.Instance.AddLiveEnemy(this);
         EnemyManager.Instance.AddLiveEnemy(this);
+        EnemyManager.Instance.RemoveIdleEnemy(this);
     }
 
     private void spawnIdleEnemy()
