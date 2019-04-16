@@ -112,12 +112,18 @@ public class GameManager : SimpleSingleton<GameManager>
             StartCoroutine(WaitToSpawnEnemy());
     }
 
-    public void CheckGameState()
+    public void CheckGameState(bool hasPassedThreshold = false)
     {
         Debug.Log("checking game state...");
         if (EnemyManager.Instance.m_liveEnemies.Count < 1 && EnemyManager.Instance.m_idleEnemies.Count < 1)
         {
             Debug.Log("GAME OVER");
+        }
+        else
+        {
+            if(!hasPassedThreshold)
+                EnemyManager.Instance.GetNextEnemy();
+            //NextEnemy();
         }
     }
 

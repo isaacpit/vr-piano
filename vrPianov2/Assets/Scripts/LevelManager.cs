@@ -43,13 +43,13 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
         if (failStreak >= streakAmountToChangeHandicaps)
         {
-            currentHandicapLevel = Mathf.Clamp(currentHandicapLevel++, 0, 5);
+            currentHandicapLevel = Mathf.Clamp(++currentHandicapLevel, 0, 5);
             failStreak = 0;
             winStreak = 0;
         }
         else if (winStreak >= streakAmountToChangeHandicaps)
         {
-            currentHandicapLevel = Mathf.Clamp(currentHandicapLevel--, 0, 5);
+            currentHandicapLevel = Mathf.Clamp(--currentHandicapLevel, 0, 5);
             failStreak = 0;
             winStreak = 0;
         }

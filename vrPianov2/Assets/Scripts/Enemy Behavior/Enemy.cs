@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Types;
@@ -43,6 +44,8 @@ public class Enemy : MonoBehaviour
     public IdlePath pathingBox;
 
     public FlightMode m_currMode = FlightMode.FLY_IDLE;
+    private bool hasPassedThreshold;
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -73,8 +76,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject == m_spawnNextEnemyCollider)
         {
+            hasPassedThreshold = true;
             Debug.Log("Spawning next enemy...");
-            GameManager.Instance.NextEnemy();
+            EnemyManager.Instance.GetNextEnemy();
+            //GameManager.Instance.NextEnemy();
         }
     }
 
@@ -86,8 +91,9 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnDisable()
-    {
+    {        
         hideEnemy();
+        hasPassedThreshold = false;
     }
 
     public void beginIdle()
@@ -128,7 +134,7 @@ public class Enemy : MonoBehaviour
         m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
         EnemyManager.Instance.RemoveLiveEnemy(this);
-        GameManager.Instance.CheckGameState();
+        GameManager.Instance.CheckGameState(hasPassedThreshold);
     }
 
     private void ChangeMaterial()

@@ -16,6 +16,7 @@ MonoBehaviour:
   stageType: 0
   minEnemySpeed: 1.5
   maxEnemySpeed: 2.5
+  spawnDelay: 1
   weightedChordList:
   - chordType: 0
     weight: 33

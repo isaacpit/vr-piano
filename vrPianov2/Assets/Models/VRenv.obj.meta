@@ -1,0 +1,289 @@
+fileFormatVersion: 2
+guid: 5c812fb368a867d4e91be54748cb2c4a
+ModelImporter:
+  serializedVersion: 25
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Mainframe_pCube2Mat
+    second: {fileID: 2100000, guid: 739b51e5bb92a7648b834b2c0d4c69ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Mainframe_pCube3Mat
+    second: {fileID: 2100000, guid: 4ca227ebc7e1c494e9317176ed24e254, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Mainframe_pCube4Mat
+    second: {fileID: 2100000, guid: cd9c129ba8779e343a0136eccda66a8e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Mainframe_pCylinder1Mat
+    second: {fileID: 2100000, guid: 23407d5565cd1ae4f8be2ebf4dff4fd9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_Mainframe_polySurface2Mat
+    second: {fileID: 2100000, guid: 03f7a474ae8dbd948b6f1dd76b60b016, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_floorMat
+    second: {fileID: 2100000, guid: 8564d56be8ea78c4c8d22e69488267d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_pCube5_wall_walll_piller1Mat
+    second: {fileID: 2100000, guid: 07d9173aef3417e4797766e33c22c004, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_pCube5_wall_walll_piller2Mat
+    second: {fileID: 2100000, guid: 251d1376f59995b4db73b692a267c793, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_pCube5_wall_walll_pillerMat
+    second: {fileID: 2100000, guid: 0d65de92251dbf044a5295b70aae65f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_polySurface1_MainframeMat
+    second: {fileID: 2100000, guid: 54ea2bc6058459c40abeb8386839a92c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pCube7_pillers1Mat
+    second: {fileID: 2100000, guid: cec7c992c3ed6474b8e58fdda84f707e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pCube7_pillersMat
+    second: {fileID: 2100000, guid: f0960ced7242751488be826b56a352e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers1_pCube11Mat
+    second: {fileID: 2100000, guid: 3fbf59169a1fa4049838cc22e96ec2d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers1_pCube6Mat
+    second: {fileID: 2100000, guid: 71e56ba1556bef2459a73744ec60bfdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers1_pCube8Mat
+    second: {fileID: 2100000, guid: 9fc78d43a562a6e44af6108ee45e05e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers_pCube10Mat
+    second: {fileID: 2100000, guid: 24b2aa8ed8904f74ca4a73220191f8de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers_pCube6Mat
+    second: {fileID: 2100000, guid: c86a4ec14b490ef48872783a4c190e24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller1_pillers_pCube8Mat
+    second: {fileID: 2100000, guid: 5367712aaa736e2479d4d0531f912a29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pCube7_pillers1Mat
+    second: {fileID: 2100000, guid: f5a2fde89e972164d831cfc65dcdfae3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pCube7_pillersMat
+    second: {fileID: 2100000, guid: d760521ee97b0834c82d64cc9fd9865c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers1_pCube11Mat
+    second: {fileID: 2100000, guid: 231ed0116577bfb49a6ae77512558098, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers1_pCube6Mat
+    second: {fileID: 2100000, guid: 99262ecd135feaa4db987869461437c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers1_pCube8Mat
+    second: {fileID: 2100000, guid: 57b712dcf1132e8429e517ded5b5db5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers_pCube10Mat
+    second: {fileID: 2100000, guid: a73af861577a6c54eb8e30987241be5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers_pCube6Mat
+    second: {fileID: 2100000, guid: 15e86555a3d71314683cb533d059c4e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller2_pillers_pCube8Mat
+    second: {fileID: 2100000, guid: fe435df3109185e42bff1cc9a96430f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pCube7_pillers1Mat
+    second: {fileID: 2100000, guid: 9f900d1def722054aba2cfaf5c94b56f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pCube7_pillersMat
+    second: {fileID: 2100000, guid: 79415a1582604274f8565a51699ddff7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers1_pCube11Mat
+    second: {fileID: 2100000, guid: 02459a0d2df50f048903adc6185b13e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers1_pCube6Mat
+    second: {fileID: 2100000, guid: c8ba710fd3d0c92488505d6368dd904f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers1_pCube8Mat
+    second: {fileID: 2100000, guid: 75d5743d951793d4d8e7d7907f32e8a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers_pCube10Mat
+    second: {fileID: 2100000, guid: 744d1eb286ddce542859ded036c6e72a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers_pCube6Mat
+    second: {fileID: 2100000, guid: 0d9a756b01726f646972d37e41805ae9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_wall_walll_piller_pillers_pCube8Mat
+    second: {fileID: 2100000, guid: 4051284f58dd0f14b9c049d1483b04f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_walll_piller1_pillar_pillersMat
+    second: {fileID: 2100000, guid: 3fbdb6096d6123342bb4c2f5c7641465, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_walll_piller1_pillers_pillar1Mat
+    second: {fileID: 2100000, guid: 380c8ee05be8ab24984b9f181c48b7e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_walll_piller2_pillar_pillers2Mat
+    second: {fileID: 2100000, guid: 0ef066dd4b124bd428d990c48a6a6b18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: env_walll_piller2_pillers2_pillar1Mat
+    second: {fileID: 2100000, guid: 0fd96f91eba441042aff196b7230f287, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: roof_envMat
+    second: {fileID: 2100000, guid: ec9cdab62d329064cb28b5c3da5c0129, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

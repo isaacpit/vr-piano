@@ -78,6 +78,17 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         Debug.Log("EnemyManager | m_liveEnemies: " + m_liveEnemies.Count);
     }
 
+    public void GetNextEnemy()
+    {
+        StartCoroutine(WaitToSpawn());
+    }
+
+    private IEnumerator WaitToSpawn()
+    {
+        yield return new WaitForSeconds(LevelManager.Instance.currentStageObject.spawnDelay);
+        GameManager.Instance.NextEnemy();
+    }
+
     public void AddIdleEnemy(Enemy e)
     {
         m_idleEnemies.Add(e);
