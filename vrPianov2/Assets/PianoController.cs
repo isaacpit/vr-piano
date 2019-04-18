@@ -20,20 +20,38 @@ public class PianoController : MonoBehaviour
     [SerializeField]
     private float joystickMaxAngle = 60f;
 
+    private ControllerMixerInterface mixerInterface;
+
     private void Awake()
     {
         pose = GetComponent<SteamVR_Behaviour_Pose>();
         hand = pose.inputSource;
+        mixerInterface = GetComponentInParent<ControllerMixerInterface>();
     }
 
     private void Update()
     {
-        var padPos = SteamVR_Actions.default_ModAndPitch.GetAxis(hand);
-        RotateJoystick(padPos);
-        if (padPos.sqrMagnitude > 0f)
+        if (hand == SteamVR_Input_Sources.LeftHand)
         {
-            RotateSphere(padPos);
+            var pitchPos = SteamVR_Actions.default_Pitch.GetAxis(hand);
+            if (pitchPos.sqrMagnitude > 0f)
+            {
+                RotateSphere(pitchPos);
+            }
+            RotateJoystick(pitchPos);
+            mixerInterface.PitchChange(pitchPos);
         }
+        else if (hand == SteamVR_Input_Sources.RightHand)
+        {
+            var modPos = SteamVR_Actions.default_Modulation.GetAxis(hand);
+            if (modPos.sqrMagnitude > 0f)
+            {
+                RotateSphere(modPos);
+            }
+            RotateJoystick(modPos);
+            mixerInterface.ModulationChange(modPos);
+        }
+
     }
 
     private void RotateJoystick(Vector2 padPos)

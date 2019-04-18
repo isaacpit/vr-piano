@@ -19,9 +19,11 @@ namespace Valve.VR
         
         private static SteamVR_Action_Pose p_default_Pose;
         
-        private static SteamVR_Action_Vector2 p_default_ModAndPitch;
+        private static SteamVR_Action_Vector2 p_default_Pitch;
         
         private static SteamVR_Action_Boolean p_default_SustainTrigger;
+        
+        private static SteamVR_Action_Vector2 p_default_Modulation;
         
         private static SteamVR_Action_Vibration p_default_Haptic;
         
@@ -33,11 +35,11 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Vector2 default_ModAndPitch
+        public static SteamVR_Action_Vector2 default_Pitch
         {
             get
             {
-                return SteamVR_Actions.p_default_ModAndPitch.GetCopy<SteamVR_Action_Vector2>();
+                return SteamVR_Actions.p_default_Pitch.GetCopy<SteamVR_Action_Vector2>();
             }
         }
         
@@ -46,6 +48,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.p_default_SustainTrigger.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Vector2 default_Modulation
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Modulation.GetCopy<SteamVR_Action_Vector2>();
             }
         }
         
@@ -61,13 +71,15 @@ namespace Valve.VR
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
                     SteamVR_Actions.default_Pose,
-                    SteamVR_Actions.default_ModAndPitch,
+                    SteamVR_Actions.default_Pitch,
                     SteamVR_Actions.default_SustainTrigger,
+                    SteamVR_Actions.default_Modulation,
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_Pose,
-                    SteamVR_Actions.default_ModAndPitch,
-                    SteamVR_Actions.default_SustainTrigger};
+                    SteamVR_Actions.default_Pitch,
+                    SteamVR_Actions.default_SustainTrigger,
+                    SteamVR_Actions.default_Modulation};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -78,19 +90,22 @@ namespace Valve.VR
                     SteamVR_Actions.default_SustainTrigger};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[] {
-                    SteamVR_Actions.default_ModAndPitch};
+                    SteamVR_Actions.default_Pitch,
+                    SteamVR_Actions.default_Modulation};
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
             Valve.VR.SteamVR_Input.actionsSkeleton = new Valve.VR.SteamVR_Action_Skeleton[0];
             Valve.VR.SteamVR_Input.actionsNonPoseNonSkeletonIn = new Valve.VR.ISteamVR_Action_In[] {
-                    SteamVR_Actions.default_ModAndPitch,
-                    SteamVR_Actions.default_SustainTrigger};
+                    SteamVR_Actions.default_Pitch,
+                    SteamVR_Actions.default_SustainTrigger,
+                    SteamVR_Actions.default_Modulation};
         }
         
         private static void PreInitActions()
         {
             SteamVR_Actions.p_default_Pose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/default/in/Pose")));
-            SteamVR_Actions.p_default_ModAndPitch = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/default/in/ModAndPitch")));
+            SteamVR_Actions.p_default_Pitch = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/default/in/Pitch")));
             SteamVR_Actions.p_default_SustainTrigger = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SustainTrigger")));
+            SteamVR_Actions.p_default_Modulation = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/default/in/Modulation")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
         }
     }

@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 6907586296068357353}
   - component: {fileID: 1377664443303893776}
   - component: {fileID: 2909213055907204554}
+  - component: {fileID: 1692590053}
   m_Layer: 0
   m_Name: '[CameraRig]'
   m_TagString: Untagged
@@ -333,6 +334,21 @@ MonoBehaviour:
   - {x: -1.65, y: 0.01, z: -1.275}
   - {x: -1.65, y: 0.01, z: 1.275}
   - {x: 1.65, y: 0.01, z: 1.275}
+--- !u!114 &1692590053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8196926113242256452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 057c8d5309380e84283295228662fbf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 2ed76c8d475e3cd428c925c5d59e6baa, type: 2}
+  maxPitchDeviation: 0.45
 --- !u!1001 &1473670443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -415,11 +431,6 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 1432831665}
-    - target: {fileID: 4819004301460725356, guid: a2d20b0fcc2d99447b24f15a6a756732,
-        type: 3}
-      propertyPath: sphereRotateSpeed
-      value: 750
-      objectReference: {fileID: 0}
     - target: {fileID: 1805906209, guid: a2d20b0fcc2d99447b24f15a6a756732, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -533,11 +544,6 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 8438551300266431465}
-    - target: {fileID: 4819004301460725356, guid: a2d20b0fcc2d99447b24f15a6a756732,
-        type: 3}
-      propertyPath: sphereRotateSpeed
-      value: 750
-      objectReference: {fileID: 0}
     - target: {fileID: 1805906209, guid: a2d20b0fcc2d99447b24f15a6a756732, type: 3}
       propertyPath: m_Layer
       value: 8

@@ -25,11 +25,11 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Vector2 ModAndPitch
+        public virtual SteamVR_Action_Vector2 Pitch
         {
             get
             {
-                return SteamVR_Actions.default_ModAndPitch;
+                return SteamVR_Actions.default_Pitch;
             }
         }
         
@@ -38,6 +38,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.default_SustainTrigger;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vector2 Modulation
+        {
+            get
+            {
+                return SteamVR_Actions.default_Modulation;
             }
         }
         
