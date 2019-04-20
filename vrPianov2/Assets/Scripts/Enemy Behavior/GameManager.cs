@@ -26,6 +26,14 @@ public class GameManager : SimpleSingleton<GameManager>
         StartSpawning();
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D)) {
+            StopSpawning();
+        }
+        
+    }
+
     IEnumerator SpawnEnemyWave()
     {
         //Debug.Log(3);
@@ -88,11 +96,13 @@ public class GameManager : SimpleSingleton<GameManager>
     {
         readyToSpawn = false;
 
-        var enemy = EnemyManager.Instance.tracker.currentTrackingEnemy;
-        if (enemy)
-        {
-           enemy.PoolDestroy(false);
-        }
+        
+        //var enemy = EnemyManager.Instance.tracker.currentTrackingEnemy;
+        //if (enemy)
+        //{
+        //   enemy.PoolDestroy(false);
+        //}
+        EnemyManager.Instance.DestroyAllEnemies();
         EnemyManager.Instance.tracker.noteMonitor.PrintToScreen("JAM OUT");
     }
 

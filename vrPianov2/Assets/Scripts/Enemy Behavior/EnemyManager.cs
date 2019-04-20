@@ -13,6 +13,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     public List<Enemy> m_liveEnemies;
     public List<Enemy> m_idleEnemies;
+    public List<Enemy> m_pooledEnemies;
     public Enemy m_currentEnemy;
 
     [SerializeField]
@@ -126,6 +127,11 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
 
     }
 
+    public void PoolDestroyEnemy(Enemy e)
+    {
+        m_pooledEnemies.Add(e);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -161,6 +167,26 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         //        }
         //    }
         //}
+    }
+
+    public void DestroyAllEnemies()
+    {
+        Debug.Log("idle enemies count: " + m_idleEnemies.Count);
+        int c = m_idleEnemies.Count;
+       while (m_idleEnemies.Count > 0)
+        {
+            Enemy e = m_idleEnemies.First();
+            RemoveIdleEnemy(e);
+            e.gameObject.SetActive(false);
+        }
+        //m_idleEnemies.Clear();
+        for (int i = 0; i < m_liveEnemies.Count; ++i)
+        {
+            Enemy e = m_liveEnemies.First();
+            RemoveLiveEnemy(e);
+            e.gameObject.SetActive(false);
+        }
+        //m_liveEnemies.Clear();
     }
 
     public void SpawnLiveEnemy()

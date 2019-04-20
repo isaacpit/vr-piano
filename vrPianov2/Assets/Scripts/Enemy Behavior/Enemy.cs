@@ -134,6 +134,7 @@ public class Enemy : MonoBehaviour
         m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
         EnemyManager.Instance.RemoveLiveEnemy(this);
+        EnemyManager.Instance.PoolDestroyEnemy(this);
         GameManager.Instance.CheckGameState(hasPassedThreshold);
     }
 
