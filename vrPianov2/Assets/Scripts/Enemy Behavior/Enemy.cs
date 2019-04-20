@@ -131,16 +131,17 @@ public class Enemy : MonoBehaviour
         // place back into spawner queue
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
-        m_spawner.m_hiddenEnemies.Enqueue(this.gameObject);
         // remove from InputManager's live queue
         EnemyManager.Instance.RemoveLiveEnemy(this);
+        m_spawner.m_idleEnemies.Remove(this.gameObject);
+        m_spawner.m_hiddenEnemies.Add(this.gameObject);
         EnemyManager.Instance.PoolDestroyEnemy(this);
         GameManager.Instance.CheckGameState(hasPassedThreshold);
     }
 
     private void ChangeMaterial()
     {
-        Debug.Log("chordType: " + chord.chordType);
+        //Debug.Log("chordType: " + chord.chordType);
         switch (chord.chordType)
         {
             case ChordType.Major:

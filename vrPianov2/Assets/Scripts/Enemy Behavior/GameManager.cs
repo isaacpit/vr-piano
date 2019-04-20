@@ -23,13 +23,17 @@ public class GameManager : SimpleSingleton<GameManager>
 
     private void Start()
     {
-        StartSpawning();
+        //StartSpawning();
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.D)) {
             StopSpawning();
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            StartSpawning();
         }
         
     }
@@ -102,14 +106,23 @@ public class GameManager : SimpleSingleton<GameManager>
         //{
         //   enemy.PoolDestroy(false);
         //}
+
         EnemyManager.Instance.DestroyAllEnemies();
+
         EnemyManager.Instance.tracker.noteMonitor.PrintToScreen("JAM OUT");
     }
 
     public void StartSpawning()
     {
+        CheckPoolAndSpawn();
         readyToSpawn = true;
         FirstEnemy();
+    }
+
+    public void CheckPoolAndSpawn()
+    {
+        EnemyManager.Instance.QuerySpawners();
+
     }
 
     public void FirstEnemy()
@@ -117,6 +130,7 @@ public class GameManager : SimpleSingleton<GameManager>
         // old
         //if(readyToSpawn)
         //    StartCoroutine(WaitToSpawnEnemy());
+       
 
         if (readyToSpawn)
             StartCoroutine(WaitToSpawnEnemy());

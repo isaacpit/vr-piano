@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Types;
+﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using Types;
+using System.Linq;
+using System;
 
 public class Spawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
     public GameObject m_enemy;
-    public Queue<GameObject> m_idleEnemies;
-    public Queue<GameObject> m_hiddenEnemies;
+    public List<GameObject> m_idleEnemies;
+    public List<GameObject> m_hiddenEnemies;
     public int m_enemyPoolCount;
     public float randomDistanceRange = 0.1f;
 
@@ -24,14 +26,17 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        
+        m_hiddenEnemies = new List<GameObject>();
+        m_idleEnemies = new List<GameObject>();
+        m_pathingBoxes = new List<GameObject>();
+        createPool(m_enemyPoolCount);
+
     }
 
     void Start()
     {
         // Dynamically create all a pool of enemies of type m_enemy
-
-        createPool();
+        
 
     }
 
@@ -41,16 +46,16 @@ public class Spawner : MonoBehaviour
         destroyCollider = destCol;
     }
 
-    void createPool()
+    void createPool(int size = 0)
     {
+        //Debug.Log("createPOOl: " + size);
         spawnPosition = transform.position;
 
-        m_hiddenEnemies = new Queue<GameObject>();
-        m_idleEnemies = new Queue<GameObject>();
-        m_pathingBoxes = new List<GameObject>();
 
+
+        // creates pathing boxes
         // TODO : don't spawn all enemies into idle, leave some disabled in pool
-        for (int i = 0; i < m_enemyPoolCount; ++i)
+        for (int i = 0; i < size; ++i)
         {
             GameObject obj ;
             //obj.SetActive(false);
@@ -61,12 +66,13 @@ public class Spawner : MonoBehaviour
             obj.SetActive(true);
         }
 
-        createIdleEnemies();
+        createIdleEnemies(size);
 
     }
-    void createIdleEnemies()
+
+    void createIdleEnemies(int size = 0)
     {
-        for (int i = 0; i < m_enemyPoolCount; ++i)
+        for (int i = 0; i < size; ++i)
         {
             Vector3 v = GetRandomPoint();
 
@@ -89,44 +95,66 @@ public class Spawner : MonoBehaviour
             {
                 enemyRef.m_spawnNextEnemyCollider = m_nextEnemyCheckpoint;
             }
-            
-            enemyRef.chord = Chord.GetRandomChord();
-            enemyRef.pathingBox = m_pathingBoxes[i].GetComponent<IdlePath>();
+
+            //enemyRef.chord = Chord.GetRandomChord();
+            //enemyRef.pathingBox = m_pathingBoxes[i].GetComponent<IdlePath>();
+            //Debug.Log("m_pathing boxes.count: " + m_pathingBoxes.Count);
+            IdlePath emptyBox = m_pathingBoxes.Find(x => x.GetComponent<IdlePath>().enemy == null).GetComponent<IdlePath>();
+            enemyRef.pathingBox = emptyBox;
+            emptyBox.enemy = enemyRef.gameObject;
 
 
             //enemyRef.m_objective = targetObjective;
             enemyRef.SetObjective(targetObjective, destroyCollider);
-            m_pathingBoxes[i].GetComponent<IdlePath>().enemy = enemyRef.gameObject;
+            //m_pathingBoxes[i].GetComponent<IdlePath>().enemy = enemyRef.gameObject;
             //enemyRef.m
             //enemyRef.m_endPos = enemyObjective.transform.position;
-            m_idleEnemies.Enqueue(obj);
-            obj.SetActive(true);
+            m_hiddenEnemies.Add(obj);
+            //obj.SetActive(true);
 
 
         }
     }
 
+
+    
+
     Vector3 GetRandomPoint()
     {
         
-        float xpos = Random.Range(transform.position.x - randomDistanceRange, 
+        float xpos = UnityEngine.Random.Range(transform.position.x - randomDistanceRange, 
             transform.position.x + randomDistanceRange);
-        float ypos = Random.Range(transform.position.y - randomDistanceRange,
+        float ypos = UnityEngine.Random.Range(transform.position.y - randomDistanceRange,
             transform.position.y + randomDistanceRange);
-        float zpos = Random.Range(transform.position.z - randomDistanceRange,
+        float zpos = UnityEngine.Random.Range(transform.position.z - randomDistanceRange,
             transform.position.z + randomDistanceRange);
 
         return new Vector3(xpos, ypos, zpos);
     }
 
+    public void SpawnIdleEnemies(int sz)
+    {
+        for (int i = 0; i < sz; ++i)
+        {
+            
+            if (m_hiddenEnemies.Count < 1)
+                Debug.Log("All out of enemies in this spawner!!");
+            Enemy e = m_hiddenEnemies.First().GetComponent<Enemy>();
+            e.chord = Chord.GetRandomChord();
+            e.m_spawner = this;
+            m_idleEnemies.Add(e.gameObject);
+            m_hiddenEnemies.Remove(e.gameObject);
+            e.gameObject.SetActive(true);
+        }
+    }
 
     public void SpawnLiveEnemy(GameObject targetObjective)
     {
         if (m_idleEnemies.Count > 0)
         {
-
-            Enemy enemy = m_idleEnemies.Dequeue().GetComponent<Enemy>();
-
+            
+            Enemy enemy = m_idleEnemies.First().GetComponent<Enemy>();
+            m_idleEnemies.Remove(enemy.gameObject);
             enemy.m_startPos = GetRandomPoint();
             //enemy.gameObject.SetActive(true);
             enemy.spawnLiveEnemy();
@@ -147,5 +175,16 @@ public class Spawner : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 1f);
+    }
+
+    public void CheckPoolAndSpawn(int sz)
+    {
+        // creates enemies if more are needed to satisfy the request
+        if (m_hiddenEnemies.Count < sz)
+            createPool(sz - m_hiddenEnemies.Count);
+
+        // spawn from pooled resources
+        SpawnIdleEnemies(sz);
+
     }
 }

@@ -106,7 +106,7 @@ public class IdlePath : MonoBehaviour
         {
             for (int i = 0; i < points.Count - 3; ++i)
             {
-                for (float t = 0.0f; t < 1.0f; t += 0.01f)
+                for (float t = 0.0f; t < 1.0f; t += 0.1f)
                 {
                     Vector3 v = InterpolateFromCatmullRomSpline(points[i], points[i + 1], points[i + 2], points[i + 3], t);
                     if (inDebugMode)

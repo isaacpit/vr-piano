@@ -14,11 +14,11 @@ MonoBehaviour:
   m_Name: One
   m_EditorClassIdentifier: 
   stageType: 0
-  minEnemySpeed: 0.5
-  maxEnemySpeed: 1
-  minNumberOfEnemiesPerPool: 5
-  maxNumberOfEnemiesPerPool: 10
-  spawnDelay: 1
+  minEnemySpeed: 1
+  maxEnemySpeed: 2
+  minNumberOfEnemiesPerPool: 3
+  maxNumberOfEnemiesPerPool: 5
+  spawnDelay: 0
   weightedChordList:
   - chordType: 0
     weight: 33

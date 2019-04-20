@@ -132,61 +132,33 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
         m_pooledEnemies.Add(e);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    SpawnEnemy();
-        //}
-        //if (m_currentEnemy != null)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Alpha1))
-        //    {
-        //        Debug.Log("Triggered 1 ");
-        //        if (m_currentEnemy.chord.chordType == ChordType.Major)
-        //        {
-        //            m_currentEnemy.gameObject.SetActive(false);
-        //        }
-        //    }
-        //    if (Input.GetKeyDown(KeyCode.Alpha2))
-        //    {
-        //        Debug.Log("Triggered 2 ");
-        //        if (m_currentEnemy.chord.chordType == ChordType.Minor)
-        //        {
-        //            m_currentEnemy.gameObject.SetActive(false);
-        //        }
-        //    }
-        //    if (Input.GetKeyDown(KeyCode.Alpha3))
-        //    {
-        //        Debug.Log("Triggered 3 ");
-        //        if (m_currentEnemy.chord.chordType == ChordType.Diminished)
-        //        {
-        //            m_currentEnemy.gameObject.SetActive(false);
-        //        }
-        //    }
-        //}
-    }
-
     public void DestroyAllEnemies()
     {
-        Debug.Log("idle enemies count: " + m_idleEnemies.Count);
         int c = m_idleEnemies.Count;
-       while (m_idleEnemies.Count > 0)
+        while (m_idleEnemies.Count > 0)
         {
             Enemy e = m_idleEnemies.First();
             RemoveIdleEnemy(e);
             e.gameObject.SetActive(false);
         }
-        //m_idleEnemies.Clear();
-        for (int i = 0; i < m_liveEnemies.Count; ++i)
+        
+        while (m_liveEnemies.Count > 0)
         {
             Enemy e = m_liveEnemies.First();
             RemoveLiveEnemy(e);
             e.gameObject.SetActive(false);
         }
-        //m_liveEnemies.Clear();
+        
+    }
+
+    public void QuerySpawners()
+    {
+        int min = LevelManager.Instance.currentStageObject.minNumberOfEnemiesPerPool;
+        int max = LevelManager.Instance.currentStageObject.maxNumberOfEnemiesPerPool;
+        for (int i = 0; i < m_spawners.Count;++i)
+        {
+            m_spawners.ElementAt(i).CheckPoolAndSpawn(UnityEngine.Random.Range(min, max));
+        }
     }
 
     public void SpawnLiveEnemy()
@@ -196,30 +168,6 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
             int idx = UnityEngine.Random.Range(0, m_idleEnemies.Count);
             m_idleEnemies.ElementAt(idx).m_spawner.SpawnLiveEnemy(targetObjective);
         }
-        //else if (m_idleEnemies.Count < 1 && m_liveEnemies.Count > 0)
-        //{
-        //    Debug.Log("Still some enemies coming at the player...");
-        //}
-        //else
-        //{
-        //    Debug.Log("GAME OVER, NO ENEMIES LEFT");
-        //}
-        //m_spawnerIndex = UnityEngine.Random.Range(0, m_spawners.Count);
-        //if (0 <= m_spawnerIndex && m_spawnerIndex < m_spawners.Count)
-        //{
-        //    if (m_spawners[m_spawnerIndex] != null)
-        //    {               
-        //        m_spawners[m_spawnerIndex].SpawnLiveEnemy(targetObjective);
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Missing spawners");
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.LogError("Spawner index out of bounds");
-        //}
     }
 
     public void PlayExplosionFX(Transform location, int particleCount)

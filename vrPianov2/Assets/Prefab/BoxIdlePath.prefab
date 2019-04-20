@@ -111,6 +111,6 @@ MonoBehaviour:
   boxSize: {x: 0, y: 0, z: 0}
   speed: 1
   buff: 10
-  enemy: {fileID: 8316464157438074748, guid: 86fe85d78ec02474896305924fda90c3, type: 3}
+  enemy: {fileID: 0}
   points: []
   enemies: []
