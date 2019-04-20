@@ -11,13 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 14ef2f03f34984a4ca920a2321a27a46, type: 3}
-  m_Name: One
+  m_Name: Five
   m_EditorClassIdentifier: 
-  stageType: 0
-  minEnemySpeed: 0.5
-  maxEnemySpeed: 1
-  minNumberOfEnemiesPerPool: 5
-  maxNumberOfEnemiesPerPool: 10
+  stageType: 4
+  minEnemySpeed: 1.5
+  maxEnemySpeed: 2.5
+  minNumberOfEnemiesPerPool: 12
+  maxNumberOfEnemiesPerPool: 20
   spawnDelay: 1
   weightedChordList:
   - chordType: 0

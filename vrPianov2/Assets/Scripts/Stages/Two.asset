@@ -14,22 +14,42 @@ MonoBehaviour:
   m_Name: Two
   m_EditorClassIdentifier: 
   stageType: 1
-  minEnemySpeed: 80
-  maxEnemySpeed: 100
+  minEnemySpeed: 0.75
+  maxEnemySpeed: 1.25
+  minNumberOfEnemiesPerPool: 6
+  maxNumberOfEnemiesPerPool: 11
   spawnDelay: 1
   weightedChordList:
   - chordType: 0
-    weight: 30
+    weight: 33
   - chordType: 1
-    weight: 50
+    weight: 33
   - chordType: 2
-    weight: 40
+    weight: 33
   weightedMusicalNoteList:
   - noteType: 0
-    weight: 40
+    weight: 10
   - noteType: 1
-    weight: 40
+    weight: 10
+  - noteType: 2
+    weight: 10
   - noteType: 3
-    weight: 40
-  totalChordsWeight: 0
-  totalNotesWeight: 0
+    weight: 10
+  - noteType: 4
+    weight: 10
+  - noteType: 5
+    weight: 10
+  - noteType: 6
+    weight: 10
+  - noteType: 7
+    weight: 10
+  - noteType: 8
+    weight: 10
+  - noteType: 9
+    weight: 10
+  - noteType: 10
+    weight: 10
+  - noteType: 11
+    weight: 10
+  totalChordsWeight: 100
+  totalNotesWeight: 110

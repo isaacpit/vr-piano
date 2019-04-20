@@ -10,6 +10,8 @@ public class StageObject : ScriptableObject
     public StageType stageType;
     public float minEnemySpeed;
     public float maxEnemySpeed;
+    public int minNumberOfEnemiesPerPool;
+    public int maxNumberOfEnemiesPerPool;
     public float spawnDelay;
     public List<WeightedChord> weightedChordList;// Ask about clusters vs this... Do they overlap/contradict?
     public List<WeightedNote> weightedMusicalNoteList;

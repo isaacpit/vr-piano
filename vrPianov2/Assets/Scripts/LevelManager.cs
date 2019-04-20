@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Types;
+using TMPro;
 
 public class LevelManager : SimpleSingleton<LevelManager>
 {
@@ -11,6 +13,14 @@ public class LevelManager : SimpleSingleton<LevelManager>
     [Header("References")]
     [Tooltip("Make sure to have 1 scriptable per diffculty type")]
     public List<StageObject> stageObjectsList;
+    public Transform stageSelectCanvas;//TODO Move to Canvas Manager?
+    public Transform optionsCanvas;
+    public GameObject startButton;
+    public GameObject replayStageButton;
+    public GameObject nextStageButton;
+
+    [Header("Prefabs")]
+    public GameObject stageButtonPrefab;
 
     [Header("Accessors")]
     public StageObject currentStageObject;
@@ -30,14 +40,21 @@ public class LevelManager : SimpleSingleton<LevelManager>
         currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);//Just in case something else needs it
         previousHandicapLevel = currentHandicapLevel;
         AdjustHandicap();
+        AddStageButtons();
+        ShowMenu();
+        startButton.SetActive(true);
+        replayStageButton.SetActive(false);
+        nextStageButton.SetActive(false);//TODO Logic for next
+        //TODO Start the game with no enemies
     }
 
     void Update()
     {
         if (currentStageType != previousStageType)//This allows change in inspector, for quick runtime change
         {
-            currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
+            //currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
             //TODO Show new stage intro
+
         }
         previousStageType = currentStageType;
 
@@ -82,19 +99,25 @@ public class LevelManager : SimpleSingleton<LevelManager>
         }
     }
 
-    public void SetStage(StageType stageType)
+    public void SetStage(int stageType)
     {
-        currentStageObject = GetNextStageObjectsFromType(0, (int)stageType);
+        currentStageObject = GetNextStageObjectsFromType(0, stageType);
+        //previousStageType = currentStageType;
+        stageSelectCanvas.gameObject.SetActive(false);
     }
 
-    public void IncreaseStage()
+    public void OnCallBackNextStage()
     {
         currentStageObject = GetNextStageObjectsFromType(currentStageObject.stageType, 1);
+        //previousStageType = currentStageType;
+        optionsCanvas.gameObject.SetActive(false);
     }
 
     public void DecreaseStage()
     {
         currentStageObject = GetNextStageObjectsFromType(currentStageObject.stageType, -1);
+        //previousStageType = currentStageType;
+        optionsCanvas.gameObject.SetActive(false);
     }
 
     StageObject GetNextStageObjectsFromType(StageType stageType, int increaseAmount)//negative for down
@@ -166,5 +189,43 @@ public class LevelManager : SimpleSingleton<LevelManager>
             }
         }
         return currentStageObject.weightedMusicalNoteList[0].noteType;
+    }
+
+    public void AddStageButtons()
+    {
+        for (int i = 0; i < stageObjectsList.Count; i++)
+        {
+            GameObject stageButton = Instantiate(stageButtonPrefab, stageSelectCanvas);
+            int stageNumber = i;//Enum starts at 0, stages start at 1
+            stageButton.GetComponent<Button>().onClick.AddListener(() => SetStage(stageNumber));
+            stageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText((++stageNumber).ToString());
+        }
+    }
+
+    public void ShowMenu()
+    {
+        optionsCanvas.gameObject.SetActive(true);
+        stageSelectCanvas.gameObject.SetActive(false);
+    }
+
+    public void ShowStageSelect()
+    {
+        optionsCanvas.gameObject.SetActive(false);
+        stageSelectCanvas.gameObject.SetActive(true);
+    }
+
+    public void OnCallbackReplay()
+    {
+        currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
+        previousStageType = currentStageType;
+        optionsCanvas.gameObject.SetActive(false);
+    }
+
+    public void OnCallBackStart()
+    {
+        SetStage(0);
+        optionsCanvas.gameObject.SetActive(false);
+        startButton.SetActive(false);
+        replayStageButton.SetActive(true);
     }
 }
