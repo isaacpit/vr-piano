@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RadialColorChange
+  m_Name: RadialColorChange_envLightspheres
   m_Shader: {fileID: 4800000, guid: 3081b5724e912bc4a8486423ca840861, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -64,20 +64,20 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Intensity: 10
+    - _Intensity: 100
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: -0.75
+    - _Speed: -0.05
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _AxisScalars: {r: 10, g: 10, b: 10, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.26673195, g: 0.42149547, b: 0.6981132, a: 1}
-    - _Color2: {r: 0.14097545, g: 0.9056604, b: 0.9056604, a: 1}
+    - _Color1: {r: 0.35933605, g: 0.8962264, b: 0.8962264, a: 1}
+    - _Color2: {r: 0.46186364, g: 0.9150943, b: 0.67714816, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
