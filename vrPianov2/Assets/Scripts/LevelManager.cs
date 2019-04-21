@@ -50,6 +50,18 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            OnCallBackStart();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnCallbackReplay();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            OnCallBackNextStage();
+        }
         //if (currentStageType != previousStageType)//This allows change in inspector, for quick runtime change
         //{
         //    //currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
@@ -112,6 +124,7 @@ public class LevelManager : SimpleSingleton<LevelManager>
         currentStageObject = GetNextStageObjectsFromType(currentStageObject.stageType, 1);
         //previousStageType = currentStageType;
         optionsCanvas.gameObject.SetActive(false);
+        GameManager.Instance.StartSpawning();
     }
 
     public void DecreaseStage()

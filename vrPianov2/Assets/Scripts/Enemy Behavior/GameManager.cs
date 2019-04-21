@@ -34,6 +34,7 @@ public class GameManager : SimpleSingleton<GameManager>
             if (playerHealth <= 0)
             {
                 //TODO Blow up ship?
+                LevelManager.Instance.nextStageButton.SetActive(false);
                 StopSpawning();
             }
         }
@@ -162,6 +163,7 @@ public class GameManager : SimpleSingleton<GameManager>
         CheckPoolAndSpawn();
         readyToSpawn = true;
         FirstEnemy();
+        LevelManager.Instance.nextStageButton.SetActive(true);
     }
 
     public void CheckPoolAndSpawn()
@@ -186,6 +188,8 @@ public class GameManager : SimpleSingleton<GameManager>
         Debug.Log("checking game state...");
         if (EnemyManager.Instance.m_liveEnemies.Count < 1 && EnemyManager.Instance.m_idleEnemies.Count < 1)
         {
+            StopSpawning();
+            LevelManager.Instance.ShowMenu();
             Debug.Log("GAME OVER");
         }
         else
