@@ -227,6 +227,7 @@ public class Enemy : MonoBehaviour
             EnemyManager.Instance.PlayHurtFX();
             LevelManager.Instance.winStreak = 0;
             LevelManager.Instance.failStreak++;
+            GameManager.Instance.DamagePlayer(LevelManager.Instance.currentStageObject.enemyDamageAmount);
         }
         else
         {
@@ -281,6 +282,7 @@ public class Enemy : MonoBehaviour
             {
                 StartCoroutine(GameManager.Instance.piano.keys.Where(x => x.note == note).First().FlashIncorrectColor());
             }
+            GameManager.Instance.DamagePlayer(LevelManager.Instance.currentStageObject.wrongNoteDamageAmount);
         }
         if (noteHit)
         {
@@ -294,6 +296,7 @@ public class Enemy : MonoBehaviour
     {
         if (hasRootNoteBeenPlayed && hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
         {
+            GameManager.Instance.HealPlayer(LevelManager.Instance.currentStageObject.correctChordHealAmount);
             PoolDestroy(false);
         }
     }

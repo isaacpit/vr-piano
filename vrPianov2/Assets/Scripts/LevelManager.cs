@@ -50,13 +50,13 @@ public class LevelManager : SimpleSingleton<LevelManager>
 
     void Update()
     {
-        if (currentStageType != previousStageType)//This allows change in inspector, for quick runtime change
-        {
-            //currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
-            //TODO Show new stage intro
+        //if (currentStageType != previousStageType)//This allows change in inspector, for quick runtime change
+        //{
+        //    //currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
+        //    //TODO Show new stage intro
 
-        }
-        previousStageType = currentStageType;
+        //}
+        //previousStageType = currentStageType;
 
         if (failStreak >= streakAmountToChangeHandicaps)
         {
@@ -104,6 +104,7 @@ public class LevelManager : SimpleSingleton<LevelManager>
         currentStageObject = GetNextStageObjectsFromType(0, stageType);
         //previousStageType = currentStageType;
         stageSelectCanvas.gameObject.SetActive(false);
+        GameManager.Instance.StartSpawning();
     }
 
     public void OnCallBackNextStage()
@@ -198,7 +199,7 @@ public class LevelManager : SimpleSingleton<LevelManager>
             GameObject stageButton = Instantiate(stageButtonPrefab, stageSelectCanvas);
             int stageNumber = i;//Enum starts at 0, stages start at 1
             stageButton.GetComponent<Button>().onClick.AddListener(() => SetStage(stageNumber));
-            stageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText((++stageNumber).ToString());
+            stageButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText((i+1).ToString());
         }
     }
 
@@ -217,8 +218,9 @@ public class LevelManager : SimpleSingleton<LevelManager>
     public void OnCallbackReplay()
     {
         currentStageObject = GetNextStageObjectsFromType(currentStageType, 0);
-        previousStageType = currentStageType;
+        //previousStageType = currentStageType;
         optionsCanvas.gameObject.SetActive(false);
+        GameManager.Instance.StartSpawning();
     }
 
     public void OnCallBackStart()

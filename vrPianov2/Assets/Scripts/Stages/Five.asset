@@ -19,6 +19,9 @@ MonoBehaviour:
   minNumberOfEnemiesPerPool: 12
   maxNumberOfEnemiesPerPool: 20
   spawnDelay: 1
+  correctChordHealAmount: 5
+  wrongNoteDamageAmount: 5
+  enemyDamageAmount: 10
   weightedChordList:
   - chordType: 0
     weight: 33
@@ -51,5 +54,5 @@ MonoBehaviour:
     weight: 10
   - noteType: 11
     weight: 10
-  totalChordsWeight: 100
-  totalNotesWeight: 110
+  totalChordsWeight: 99
+  totalNotesWeight: 120
