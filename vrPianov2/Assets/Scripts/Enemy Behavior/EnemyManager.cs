@@ -180,7 +180,7 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     public void PlayExplosionFX(Transform location, int particleCount)
     {
         explosionFX.transform.position = location.position;
-        explosionFX.Emit(particleCount);
+        explosionFX.Play(true);
     }
 
     public void PlayHurtFX()
