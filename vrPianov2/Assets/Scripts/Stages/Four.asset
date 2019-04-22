@@ -14,8 +14,8 @@ MonoBehaviour:
   m_Name: Four
   m_EditorClassIdentifier: 
   stageType: 3
-  minEnemySpeed: 1.25
-  maxEnemySpeed: 1.75
+  minEnemySpeed: 1.5
+  maxEnemySpeed: 2.5
   minNumberOfEnemiesPerPool: 8
   maxNumberOfEnemiesPerPool: 15
   spawnDelay: 1

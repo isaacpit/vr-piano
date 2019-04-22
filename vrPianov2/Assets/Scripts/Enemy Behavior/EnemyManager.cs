@@ -50,6 +50,13 @@ public class EnemyManager : SimpleSingleton<EnemyManager>
     {
 
     }
+    void Update()
+    {
+        if(m_liveEnemies.Count>0 && Input.GetKeyDown(KeyCode.K))
+        {
+            m_liveEnemies[0].PoolDestroy(false, true);
+        }
+    }
 
     public void TrackNextEnemy()
     {

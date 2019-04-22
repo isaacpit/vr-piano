@@ -129,6 +129,7 @@ public class Enemy : MonoBehaviour
     private void hideEnemy()
     {
         // place back into spawner queue
+        hasRootNoteBeenPlayed = false;
         hasSecondNoteBeenPlayed = false;
         hasThirdNoteBeenPlayed = false;
         // remove from InputManager's live queue
@@ -218,9 +219,12 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void PoolDestroy(bool isDamageToPlayer)
+    public void PoolDestroy(bool isDamageToPlayer, bool playerDestroyedEnemy = false)
     {
-        
+        if(playerDestroyedEnemy)
+        {
+           StartCoroutine(ExplosionManager.Instance.ExplodeAt(transform));
+        }
         if (isDamageToPlayer)
         {
             //  Debug.Log("Player Hit");
@@ -236,7 +240,7 @@ public class Enemy : MonoBehaviour
             // TODO : activate flying animation here and place back into idle pool
         }
         GetComponent<EnemyReticle>().RemoveReticle();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
     }
 
@@ -297,7 +301,7 @@ public class Enemy : MonoBehaviour
         if (hasRootNoteBeenPlayed && hasSecondNoteBeenPlayed && hasThirdNoteBeenPlayed)
         {
             GameManager.Instance.HealPlayer(LevelManager.Instance.currentStageObject.correctChordHealAmount);
-            PoolDestroy(false);
+            PoolDestroy(false, true);
         }
     }
 
