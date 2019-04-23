@@ -2,7 +2,7 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.vrpianov2.exe",
+      "app_key": "application.generated.unity.steamvr.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "action_manifest_path": "C:\\Users\\VRMachine_1\\Documents\\~VIST_SQUAD\\vrPiano\\vrPianov2\\actions.json",

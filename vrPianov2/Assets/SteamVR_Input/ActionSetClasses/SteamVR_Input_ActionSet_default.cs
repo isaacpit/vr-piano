@@ -17,38 +17,6 @@ namespace Valve.VR
     public class SteamVR_Input_ActionSet_default : Valve.VR.SteamVR_ActionSet
     {
         
-        public virtual SteamVR_Action_Boolean InteractUI
-        {
-            get
-            {
-                return SteamVR_Actions.default_InteractUI;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean Teleport
-        {
-            get
-            {
-                return SteamVR_Actions.default_Teleport;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean GrabPinch
-        {
-            get
-            {
-                return SteamVR_Actions.default_GrabPinch;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean GrabGrip
-        {
-            get
-            {
-                return SteamVR_Actions.default_GrabGrip;
-            }
-        }
-        
         public virtual SteamVR_Action_Pose Pose
         {
             get
@@ -57,35 +25,27 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Skeleton SkeletonLeftHand
+        public virtual SteamVR_Action_Vector2 Pitch
         {
             get
             {
-                return SteamVR_Actions.default_SkeletonLeftHand;
+                return SteamVR_Actions.default_Pitch;
             }
         }
         
-        public virtual SteamVR_Action_Skeleton SkeletonRightHand
+        public virtual SteamVR_Action_Boolean SustainTrigger
         {
             get
             {
-                return SteamVR_Actions.default_SkeletonRightHand;
+                return SteamVR_Actions.default_SustainTrigger;
             }
         }
         
-        public virtual SteamVR_Action_Single Squeeze
+        public virtual SteamVR_Action_Vector2 Modulation
         {
             get
             {
-                return SteamVR_Actions.default_Squeeze;
-            }
-        }
-        
-        public virtual SteamVR_Action_Boolean HeadsetOnHead
-        {
-            get
-            {
-                return SteamVR_Actions.default_HeadsetOnHead;
+                return SteamVR_Actions.default_Modulation;
             }
         }
         
